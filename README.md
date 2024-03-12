@@ -29,6 +29,19 @@ the requirements for ITCS212 Web Programming, Faculty of Information Communicati
 
 ### Setup Instruction
 <!-- setup instruction info  -->
+1. Clone project
+```bash
+git clone https://github.com/Yoboba/ict-itcs212-migaku-client.git
+```
+2. install dependencies from package.json
+```bash
+npm install
+```
+3. try run on development stage
+```bash
+npm run dev
+```
 
 ### Page Examples
-<!-- sample website image  -->
+- Landing Page
+<img src="./src/public/landing.png"/>
