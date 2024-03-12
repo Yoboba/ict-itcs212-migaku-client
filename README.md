@@ -33,11 +33,15 @@ the requirements for ITCS212 Web Programming, Faculty of Information Communicati
 ```bash
 git clone https://github.com/Yoboba/ict-itcs212-migaku-client.git
 ```
-2. install dependencies from package.json
+2. cd to src folder
+```bash
+cd src
+```
+3. install dependencies from package.json
 ```bash
 npm install
 ```
-3. try run on development stage
+4. try run on development stage
 ```bash
 npm run dev
 ```
