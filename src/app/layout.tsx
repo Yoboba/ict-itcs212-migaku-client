@@ -2,7 +2,6 @@ import "../styles/globals.css";
 import type { Metadata } from "next";
 import { lexend } from "@/lib/font";
 import { cn } from "@/lib/utils";
-
 import NavBar from "@/components/my-ui/navbar";
 
 export const metadata: Metadata = {
