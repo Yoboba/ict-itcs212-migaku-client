@@ -24,6 +24,13 @@ const config = {
       },
       colors: {
         // TODO : Init custom colors here
+        c0 : "#727272",
+        c1 : "#FEA800",
+        c2 : "#FF3031",
+        c3 : "#EEB340",
+        c4 : "#FF797A",
+        c5 : "#FF797A",
+        c6 : "#FFAD81",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
