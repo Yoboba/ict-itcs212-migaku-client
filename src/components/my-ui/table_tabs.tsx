@@ -1,9 +1,29 @@
 import React from 'react'
+import CourseCard from './course_card'
+import TableSearchBar from './table_search_bar'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from '../ui/button'
-import TableSearchBar from './table_search_bar'
 import { IconPlus, IconSortAscending2, IconUserPlus } from '@tabler/icons-react'
-import CourseCard from './course_card'
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 let mock_data = [
     {
@@ -61,10 +81,40 @@ export default function TableTabs() {
                       <IconSortAscending2 size={20} className=""/>
                     </Button>
                   </div>
-                  <Button className="h-full">
-                    <IconPlus size={16} className="mrr-0 md:mr-2"/>
-                    <div className='hidden md:block'>Add Course</div>
-                  </Button>
+
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button className="h-full">
+                        <IconPlus size={16} className="mr-0 md:mr-2"/>
+                        <div className='hidden md:block'>Add Course</div>
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[800px]">
+                      <DialogHeader>
+                        <DialogTitle>Create a new course</DialogTitle>
+                        <DialogDescription>
+                          Please fill in the required information marked with an asterisk (<span className='text-red-500'>*</span>).
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div id="dialog-content" className='flex gap-6'>
+                        <div id="image-upload-container">
+                          <div id="image-upload" className='min-w-[370px] h-[180px] border rounded-md'>
+
+                          </div>
+                        </div>
+                        <div id="dialog-form" className='flex-col gap-2 w-full'>
+                          <Label htmlFor="name" className="">
+                            Course Name <span className='text-red-500'>*</span>
+                          </Label>
+                          <Input id="name" placeholder='' className="col-span-3 mt-1" />
+                        </div>
+                      </div>
+                      <DialogFooter className='mt-4'>
+                        <Button type="submit">Save changes</Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+
                 </div>
                 <div id="course-data" className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 gap-4'>
                     {mock_data.map((item, index) => (

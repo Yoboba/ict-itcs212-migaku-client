@@ -71,14 +71,13 @@ const CourseCard = ({course}: CourseProps) => {
                     <IconDotsVertical size={20}/>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="">
-                    <DropdownMenuItem>
-                        <IconEdit size={20} className="mr-2"/>
+                    <DropdownMenuItem className="relative">
                         Edit
+                        <IconEdit size={20} className="absolute right-2"/>
                     </DropdownMenuItem>
-                    <DropdownMenuSeparator/>
                     <DropdownMenuItem>
-                        <IconTrash size={20} className="mr-2"/>
                         Delete
+                        <IconTrash size={20} className="absolute right-2"/>
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
