@@ -19,7 +19,7 @@ export default function ContentSection() {
                 <Button variant="default" className=" bg-c4 text-md font-semibold hover:bg-red-400">See More</Button>
                 <Button variant="default" className=" text-md font-semibold">Sign-Up</Button>
             </div>
-            <Image src="/assets/Ellipse_orange.svg" alt={"Orange Ellipse"} width={300} height={300} className=" absolute bottom-0 left-0 translate-y-32"/>
+            <Image src="/assets/Ellipse_orange.svg" alt={"Orange Ellipse"} width={300} height={300} className=" absolute bottom-0 left-0 translate-y-40"/>
             <Image src="/assets/Ellipse_yellow.svg" alt={"Orange Ellipse"} width={300} height={300} className=" absolute bottom-0 left-80 translate-y-16"/>
             <Image src="/assets/Ellipse_purple.svg" alt={"Orange Ellipse"} width={300} height={300} className=" absolute bottom-0 right-[-100px]"/>
         </main>
