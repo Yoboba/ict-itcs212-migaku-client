@@ -5,6 +5,16 @@ import {
     TooltipProvider,
     TooltipTrigger,
   } from "@/components/ui/tooltip"
+import { Button } from "../ui/button"
+import { IconDotsVertical, IconEdit, IconTrash } from "@tabler/icons-react"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu"
 
 type CourseProps = {
     course: {
@@ -53,8 +63,25 @@ const CourseCard = ({course}: CourseProps) => {
                         {categoryMap[course.courseCat]}
                     </TooltipContent>
                 </Tooltip>
-            </TooltipProvider>
-            
+            </TooltipProvider>         
+        </div>
+        <div id="more-options" className="absolute right-[6px] top-[12px]">
+            <DropdownMenu>
+                <DropdownMenuTrigger>
+                    <IconDotsVertical size={20}/>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="">
+                    <DropdownMenuItem>
+                        <IconEdit size={20} className="mr-2"/>
+                        Edit
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator/>
+                    <DropdownMenuItem>
+                        <IconTrash size={20} className="mr-2"/>
+                        Delete
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
         </div>
         <div id="card-footer" className='bg-slate-50 w-full py-2 px-4 flex absolute bottom-0'>
             <div id="course-name">

@@ -2,7 +2,7 @@ import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from '../ui/button'
 import TableSearchBar from './table_search_bar'
-import { IconPlus, IconUserPlus } from '@tabler/icons-react'
+import { IconPlus, IconSortAscending2, IconUserPlus } from '@tabler/icons-react'
 import CourseCard from './course_card'
 
 let mock_data = [
@@ -55,10 +55,15 @@ export default function TableTabs() {
             <div id="table" className="mt-4 border rounded-md p-4"> 
               <div id="table-container w-full flex-col items-center">
                 <div id="table-header" className="flex space-x-2 items-center justify-between">
-                  <TableSearchBar/>
+                  <div id="header-left" className='h-full flex space-x-4'>
+                    <TableSearchBar/>
+                    <Button className="h-full" variant={"secondary"}>
+                      <IconSortAscending2 size={20} className=""/>
+                    </Button>
+                  </div>
                   <Button className="h-full">
-                    <IconPlus size={16} className="mr-2"/>
-                    Add Course
+                    <IconPlus size={16} className="mrr-0 md:mr-2"/>
+                    <div className='hidden md:block'>Add Course</div>
                   </Button>
                 </div>
                 <div id="course-data" className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 gap-4'>
