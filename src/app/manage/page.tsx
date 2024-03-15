@@ -1,7 +1,4 @@
-import TableSearchBar from "@/components/my-ui/table_search_bar";
-import { Button } from "@/components/ui/button";
-import { IconPlus } from "@tabler/icons-react";
-
+import TableTabs from "@/components/my-ui/table_tabs";
 export default function LandingPage() {
   return (
     <div className="w-full h-full flex">
@@ -10,18 +7,7 @@ export default function LandingPage() {
               <div className="text-4xl font-semibold">Management Panel 🎉</div>
               <div className=""></div>
             </div>
-            <div id="table" className="mt-4 border rounded-md"> 
-              <div id="table-container w-full flex-col items-center">
-                <div id="table-header" className="flex space-x-2 items-center justify-between p-4">
-                  <TableSearchBar/>
-                  <Button className="h-full">
-                    <IconPlus size={16} className="mr-2"/>
-                    Add Course
-                  </Button>
-                </div>
-              </div>
-              
-            </div>
+            <TableTabs/>
         </div>
     </div>
   )
