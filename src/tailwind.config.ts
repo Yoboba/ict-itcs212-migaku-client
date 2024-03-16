@@ -31,6 +31,7 @@ const config = {
         c4 : "#FF797A",
         c5 : "#FF797A",
         c6 : "#FFAD81",
+        c7 : "#F6C50C",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
