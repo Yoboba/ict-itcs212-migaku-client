@@ -1,5 +1,8 @@
 'use client'
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm } from "react-hook-form"
+import { useToast } from "@/components/ui/use-toast"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 import {
 	IconCurrencyBaht,
 } from "@tabler/icons-react";
@@ -23,17 +26,52 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "../ui/button";
 
-type Inputs = {
-    courseName: string,
-    courseDes: string,
-    courseCat: string,
-    price: number,
-    status: string,
-}
+const formSchema = z.object({
+    courseName: z.string().min(1, {
+        message: "Course name cannot be blank."
+    }),
+    courseDes: z.optional(z.string().max(500, {
+        message: "Course description must not exceed 500 characters.",
+    })),
+    courseCat: z.enum(["IT", "MA", "SC", "LG", "SO"], {
+        required_error: "Category must be chosen"
+    }),
+    price: z.string({
+        required_error: "Must enter a valid price",
+    }).min(1, {
+        message: "Must not be blank"
+    }).refine((value) => !/[a-z]/.test(value), 'Must be a number.')
+    .refine((value) => parseInt(value) >= 0, 'Cannot accept negative values.'),
+    status: z.enum(["Inactive", "Active"])
+})
 
 const AddCourseForm = () => {
-    const form = useForm<Inputs>()
-    const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
+    const { toast } = useToast()
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            courseName: "",
+            courseDes: "",
+            courseCat: "IT",
+            status: "Inactive",
+        }
+    })
+    
+    const onSubmit = (values: z.infer<typeof formSchema>) => {
+        const data = {
+        ...values,
+        price: parseInt(values.price),
+        status: values.status === "Inactive" ? 0 : 1
+        }
+        
+        console.log(data)
+
+        toast({
+            title: "Form data has been sent.",
+            description: `${JSON.stringify(data, null, 2)}`,
+        })
+    }
+    
 
     return (
         <Form {...form}>
@@ -53,7 +91,9 @@ const AddCourseForm = () => {
                                 render={({field}) => (
                                     <FormItem>
                                         <FormControl>
-                                            <Input placeholder="Data Communication" className="col-span-3" {...field} />
+                                            <Input placeholder="Data Communication" 
+                                                className={`col-span-3 ${form.formState.errors.courseName ? 'border-red-500' : ''}`}
+                                                {...field} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -98,7 +138,10 @@ const AddCourseForm = () => {
                                     name="courseCat"
                                     render={({field}) => (
                                         <FormItem>
-                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                            <Select 
+                                                onValueChange={field.onChange} 
+                                                defaultValue={field.value}
+                                            >
                                                 <FormControl>
                                                     <SelectTrigger className="w-full mt-0">
                                                         <SelectValue placeholder="Course Category" />
@@ -168,8 +211,7 @@ const AddCourseForm = () => {
                                                 <Input
                                                     id="price"
                                                     placeholder="10000"
-                                                    className="col-span-3 pl-8"
-                                                    type="number"
+                                                    className={`col-span-3 pl-8 ${form.formState.errors.price ? 'border-red-500' : ''}`}
                                                     {...field}
                                                 />
                                             </div>
