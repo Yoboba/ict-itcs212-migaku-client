@@ -1,4 +1,7 @@
+'use client'
 import Image from "next/image"
+import { cva } from "class-variance-authority"
+import { useState } from "react"
 import {
     Tooltip,
     TooltipContent,
@@ -15,6 +18,16 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog";
+import ManageCourseForm from "./manage_course_form"
 
 type CourseProps = {
     course: {
@@ -23,6 +36,8 @@ type CourseProps = {
         courseCat: string,
         courseName: string,
         courseDes: string,
+        price: number,
+        status: string,
         imgSrc?: string,
     }
   }
@@ -40,6 +55,31 @@ const categoryMap: CategoryMap = {
 };
 
 const CourseCard = ({course}: CourseProps) => {
+    const editDialog = (
+        <>
+            <DialogHeader>
+                <DialogTitle>Edit</DialogTitle>
+                <DialogDescription>
+                    Please make changes to your course as you seem appropriate.
+                </DialogDescription>
+            </DialogHeader>
+            <ManageCourseForm course={course}/> 
+        </>
+    )
+    const deleteDialog = (
+        <>
+            <DialogHeader>
+                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                <DialogDescription>
+                    This action cannot be undone. This will permanently delete your course
+                    and remove your data from our servers.
+                </DialogDescription>
+            </DialogHeader>
+            <Button variant="destructive">Delete</Button>
+        </>
+    )
+    const [dialogState, setDialogState] = useState('edit')
+
     if (!course.imgSrc) {
         course.imgSrc = "https://via.placeholder.com/180x180"
     }
@@ -57,7 +97,7 @@ const CourseCard = ({course}: CourseProps) => {
             <TooltipProvider delayDuration={100}>
                 <Tooltip>
                     <TooltipTrigger asChild>
-                        <div className="">{course.courseCat}</div>
+                        <div className="">{course.courseCode}</div>
                     </TooltipTrigger>
                     <TooltipContent>
                         {categoryMap[course.courseCat]}
@@ -66,21 +106,30 @@ const CourseCard = ({course}: CourseProps) => {
             </TooltipProvider>         
         </div>
         <div id="more-options" className="absolute right-[6px] top-[12px]">
-            <DropdownMenu>
-                <DropdownMenuTrigger>
-                    <IconDotsVertical size={20}/>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="">
-                    <DropdownMenuItem className="relative">
-                        Edit
-                        <IconEdit size={20} className="absolute right-2"/>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        Delete
-                        <IconTrash size={20} className="absolute right-2"/>
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
+            <Dialog>
+                <DropdownMenu>
+                    <DropdownMenuTrigger>
+                        <IconDotsVertical size={20}/>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="">
+                        <DialogTrigger asChild onClick={() => {setDialogState('edit')}}>
+                            <DropdownMenuItem className="relative">
+                                Edit
+                                <IconEdit size={20} className="absolute right-2"/>
+                            </DropdownMenuItem>
+                        </DialogTrigger>
+                        <DialogTrigger asChild onClick={() => {setDialogState('delete')}}>
+                            <DropdownMenuItem>
+                                Delete
+                                <IconTrash size={20} className="absolute right-2"/>
+                            </DropdownMenuItem>
+                        </DialogTrigger>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+                <DialogContent className={`${dialogState === 'edit' ? 'nowrap:max-w-[800px]' : ''}`}>
+                    {dialogState === 'edit' ? editDialog : deleteDialog}
+                </DialogContent>
+            </Dialog>
         </div>
         <div id="card-footer" className='bg-slate-50 w-full py-2 px-4 flex absolute bottom-0'>
             <div id="course-name">
@@ -90,6 +139,7 @@ const CourseCard = ({course}: CourseProps) => {
     </div>
   )
 }
+
 
 
 export default CourseCard
