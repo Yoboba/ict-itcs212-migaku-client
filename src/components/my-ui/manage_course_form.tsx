@@ -33,27 +33,41 @@ const formSchema = z.object({
     courseDes: z.optional(z.string().max(500, {
         message: "Course description must not exceed 500 characters.",
     })),
-    courseCat: z.enum(["IT", "MA", "SC", "LG", "SO"], {
-        required_error: "Category must be chosen"
-    }),
+    courseCat: z.string(),
     price: z.string({
         required_error: "Must enter a valid price",
     }).min(1, {
         message: "Must not be blank"
     }).refine((value) => !/[a-z]/.test(value), 'Must be a number.')
     .refine((value) => parseInt(value) >= 0, 'Cannot accept negative values.'),
-    status: z.enum(["Inactive", "Active"])
+    status: z.string()
 })
 
-const AddCourseForm = () => {
+type ManageCourseFormProps = {
+    course?: {
+        courseId: number,
+        courseCode: string,
+        courseCat: string,
+        courseName: string,
+        courseDes: string,
+        price: number,
+        status: string,
+        imgSrc?: string,
+    }
+}
+
+const ManageCourseForm = ({
+    course,
+}: ManageCourseFormProps) => {
     const { toast } = useToast()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            courseName: "",
-            courseDes: "",
-            courseCat: "IT",
-            status: "Inactive",
+            courseName: `${course ? course.courseName : ''}`,
+            courseDes: `${course? course.courseDes : ''}`,
+            courseCat: `${course? course.courseCat : 'IT'}`,
+            status: `${course? course.status : '0'}`,
+            price: `${course? course.price : 0}`
         }
     })
     
@@ -61,7 +75,7 @@ const AddCourseForm = () => {
         const data = {
         ...values,
         price: parseInt(values.price),
-        status: values.status === "Inactive" ? 0 : 1
+        status: values.status === '0' ? 0 : 1
         }
         
         console.log(data)
@@ -180,8 +194,8 @@ const AddCourseForm = () => {
                                                 </FormControl>
                                                 <SelectContent>
                                                     <SelectGroup>
-                                                        <SelectItem value="Inactive">Inactive</SelectItem>
-                                                        <SelectItem value="Active">Active</SelectItem>
+                                                        <SelectItem value="0">Inactive</SelectItem>
+                                                        <SelectItem value="1">Active</SelectItem>
                                                     </SelectGroup>
                                                 </SelectContent>
                                             </Select>
@@ -223,10 +237,12 @@ const AddCourseForm = () => {
                         </div>
                     </div>
                 </div>
-                <Button type="submit" className="w-full mt-4">Create New Course</Button>
+                <Button type="submit" className="w-full mt-4">
+                    {course ? 'Save Changes' : 'Create New Course'}
+                </Button>
             </form>
         </Form>
     )
 }
 
-export default AddCourseForm;
+export default ManageCourseForm;
