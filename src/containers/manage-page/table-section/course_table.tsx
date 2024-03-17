@@ -1,6 +1,6 @@
 import CourseCard from "./course_card";
 import TableSearchBar from "./table_search_bar";
-import { Button } from "../ui/button";
+import { Button } from "../../../components/ui/button";
 import {
 	IconPlus,
 	IconSortAscending2,

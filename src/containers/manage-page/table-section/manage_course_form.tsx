@@ -24,7 +24,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "../ui/button";
+import { Button } from "../../../components/ui/button";
 
 const formSchema = z.object({
     courseName: z.string().min(1, {

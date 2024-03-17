@@ -1,6 +1,5 @@
 'use client'
 import Image from "next/image"
-import { cva } from "class-variance-authority"
 import { useState } from "react"
 import {
     Tooltip,
@@ -8,7 +7,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
   } from "@/components/ui/tooltip"
-import { Button } from "../ui/button"
+import { Button } from "../../../components/ui/button"
 import { IconDotsVertical, IconEdit, IconTrash } from "@tabler/icons-react"
 import {
     DropdownMenu,
