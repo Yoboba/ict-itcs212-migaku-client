@@ -88,8 +88,10 @@ const CourseCard = ({course}: CourseProps) => {
             <Image
                 src={course.imgSrc}
                 alt="Course Banner"
-                layout="fill"
-                objectFit="cover"
+                fill
+                style={{
+                    objectFit: 'cover'
+                }}
             />
         </div>
         <div id="course-category" className="absolute top-1 left-[4px] font-semibold text-sm px-2 bg-slate-600 text-white rounded-[4px] cursor-pointer">
