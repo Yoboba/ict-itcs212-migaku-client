@@ -1,4 +1,4 @@
-import TableTabs from "@/components/my-ui/table_tabs";
+import TableSection from "@/containers/manage-page/table-section";
 export default function LandingPage() {
   return (
     <div className="w-full h-full flex">
@@ -7,7 +7,7 @@ export default function LandingPage() {
               <div className="text-4xl font-semibold">Management Panel 🎉</div>
               <div className=""></div>
             </div>
-            <TableTabs/>
+            <TableSection/>
         </div>
     </div>
   )
