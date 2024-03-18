@@ -1,12 +1,26 @@
+'use client';
+import { useState } from "react"
 import TableSearchBar from "./table_search_bar"
 import { Button } from "../../../components/ui/button"
 import { IconUserPlus } from '@tabler/icons-react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from "@/components/ui/table"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Table, TableHeader, TableBody, TableHead, TableRow } from "@/components/ui/table"
 import UserList from "./user_list"
 import { userData } from "../constants/mockdata"
 
 const UserTable = () => {
+    const [viewState, setViewState] = useState('all');
+
+    function renderUserList() {
+        if (viewState === 'all') {
+            return userData;
+        }else if (viewState === 'admin') {
+            return userData.filter(user => user.role === 'Admin');
+        }else if (viewState === 'user') {
+            return userData.filter(user => user.role === 'User');
+        }
+    }
+
     return (
         <div id="table" className="mt-4 border rounded-md">
               <div id="table-container w-full flex-col items-center">
@@ -20,9 +34,9 @@ const UserTable = () => {
                 <div id="table-subhead" className="flex space-x-4 justify-left px-4 pb-4">
                     <Tabs defaultValue="all">
                         <TabsList className=''>
-                            <TabsTrigger value="all">All</TabsTrigger>
-                            <TabsTrigger value="admin">Admin</TabsTrigger>
-                            <TabsTrigger value="user">User</TabsTrigger>
+                            <TabsTrigger value="all" onClick={() => setViewState('all')}>All</TabsTrigger>
+                            <TabsTrigger value="admin" onClick={() => setViewState('admin')}>Admin</TabsTrigger>
+                            <TabsTrigger value="user" onClick={() => setViewState('user')}>User</TabsTrigger>
                         </TabsList>
                     </Tabs>
                 </div>
@@ -30,16 +44,16 @@ const UserTable = () => {
                     <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[10%]">User ID</TableHead>
+                            <TableHead className="text-center w-[10%]">User ID</TableHead>
                             <TableHead className="w-[35%]">Name</TableHead>
                             <TableHead className="w-[35%]">Username</TableHead>
-                            <TableHead className="w-[10%]">Role</TableHead>
+                            <TableHead className="text-center w-[10%]">Role</TableHead>
                             <TableHead className="w-[5%]"></TableHead>
                             <TableHead className="w-[5%]"></TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {userData.map((item, index) => (
+                        {renderUserList()?.map((item, index) => (
                             <UserList key={index} user={item} />
                         ))}
                     </TableBody>
