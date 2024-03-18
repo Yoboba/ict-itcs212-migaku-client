@@ -63,3 +63,24 @@ export const mock_data = [
         status: '1',
     }
 ];
+
+export const userData = [
+    {
+        userId: 1,
+        name: "Barak Obama",
+        username: "obama007",
+        role: "Admin"
+    },
+    {
+        userId: 2,
+        name: "Donald Trump",
+        username: "trump-wall",
+        role: "Admin"
+    },
+    {
+        userId: 3,
+        name: "Yayoi Zen",
+        username: "yayoi-2000",
+        role: "User"
+    }
+];
