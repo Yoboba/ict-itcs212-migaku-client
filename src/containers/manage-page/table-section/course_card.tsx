@@ -77,11 +77,12 @@ const CourseCard = ({course}: CourseProps) => {
     const [dialogState, setDialogState] = useState('edit')
 
     if (!course.imgSrc) {
-        course.imgSrc = "https://via.placeholder.com/180x180"
+        course.imgSrc = "https://konachan.net/sample/950f7c702854f67d021882be1af2befd/Konachan.com%20-%20374218%20sample.jpg"
     }
   return (
     <div id="CardContainer" className='relative h-[180px] w-full bg-slate-200 rounded-md overflow-hidden flex-col items-center justify-center'>
-        <div id="course-banner" className=''>
+        <div id="course-banner" className='w-full h-full relative'>
+            <div id='dimmer' className="absolute bg-slate-900 w-full h-full"/>
             <Image
                 src={course.imgSrc}
                 alt="Course Banner"
@@ -89,6 +90,7 @@ const CourseCard = ({course}: CourseProps) => {
                 style={{
                     objectFit: 'cover'
                 }}
+                className="absolute opacity-70"
             />
         </div>
         <div id="course-category" className="absolute top-1 left-[4px] font-semibold text-sm px-2 bg-slate-600 text-white rounded-[4px] cursor-pointer">
