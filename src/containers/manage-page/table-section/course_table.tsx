@@ -14,17 +14,17 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import ManageCourseForm from "./manage_course_form";
-import { mock_data } from "../constants/mockdata";
+import { mockData } from "../constants/mockdata";
 
 const CourseTable = () => {
 	return (
-		<div id="table" className="mt-4 border rounded-md p-4">
+		<div id="table" className="mt-4 rounded-md border p-4">
 			<div id="table-container w-full flex-col items-center">
 				<div
 					id="table-header"
-					className="flex space-x-2 items-center justify-between"
+					className="flex items-center justify-between space-x-2"
 				>
-					<div id="header-left" className="h-full flex space-x-4">
+					<div id="header-left" className="flex h-full space-x-4">
 						<TableSearchBar />
 						<Button className="h-full" variant={"secondary"}>
 							<IconSortAscending2 size={20} className="" />
@@ -52,9 +52,9 @@ const CourseTable = () => {
 				</div>
 				<div
 					id="course-data"
-					className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 gap-4"
+					className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
 				>
-					{mock_data.map((item, index) => (
+					{mockData.map((item, index) => (
 						<CourseCard key={index} course={item} />
 					))}
 				</div>

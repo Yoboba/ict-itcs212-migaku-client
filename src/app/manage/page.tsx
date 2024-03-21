@@ -1,9 +1,9 @@
 import TableSection from "@/containers/manage-page/table-section";
 export default function LandingPage() {
   return (
-    <div className="w-full h-full flex">
-        <div id="content-container" className="px-6 flex-col items-center justify-center w-full md:w-[720px] lg:w-[1020px] xl:w-[1220px] h-full mt-24 mx-auto">
-            <div className="flex space-x-2 justify-between">
+    <div className="flex size-full">
+        <div id="content-container" className="mx-auto mt-24 size-full flex-col items-center justify-center px-6 md:w-[720px] lg:w-[1020px] xl:w-[1220px]">
+            <div className="flex justify-between space-x-2">
               <div className="text-4xl font-semibold">Management Panel 🎉</div>
               <div className=""></div>
             </div>

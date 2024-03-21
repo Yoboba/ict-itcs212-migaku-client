@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { IconStarFilled } from '@tabler/icons-react';
 
 interface StarRatingProps {

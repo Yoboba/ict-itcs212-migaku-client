@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 "use client"
 import { IconMenu2, IconX } from '@tabler/icons-react';
 import Link from 'next/link';
@@ -7,8 +8,8 @@ import { Button } from '../ui/button';
 export default function MobileNavLink() {
     const [isOpen, setIsOpen] = useState(false)
     return (
-        <div className='flex lg:hidden items-center'>
-            <Button variant="link" onClick={() => setIsOpen(!isOpen)} className=' px-2 translate-x-2'>
+        <div className='flex items-center lg:hidden'>
+            <Button variant="link" onClick={() => setIsOpen(!isOpen)} className=' translate-x-2 px-2'>
                 { isOpen ? <IconX size={30}/>  : <IconMenu2 size={30}/>}
             </Button>
             { isOpen && <DropDownNavLink /> }
@@ -18,7 +19,7 @@ export default function MobileNavLink() {
 
 function DropDownNavLink() {
     return (
-        <div className='w-full h-fit absolute top-16 left-0 flex flex-col gap-4 p-5 items-center justify-center bg-white'>
+        <div className='absolute left-0 top-16 flex h-fit w-full flex-col items-center justify-center gap-4 bg-white p-5'>
             <Link href={""} className="text-c0 hover:underline">Search</Link>
             <Link href={""} className="text-c0 hover:underline">About Us</Link>
             <Link href={""} className="text-c0 hover:underline">Log in</Link>

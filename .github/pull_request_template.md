@@ -1,5 +1,5 @@
 
-<!-- Resolve IOSS-i "<dir>/ <branch_name>" -->
+<!-- Resolve WEB-i "<dir>/ <branch_name>" -->
 
 <!-- Copy this header to be pull request title.   -->
 
