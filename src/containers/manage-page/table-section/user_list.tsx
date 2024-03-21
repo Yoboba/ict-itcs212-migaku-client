@@ -9,12 +9,16 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
+import ManageUserForm from "./manage_user_form";
 
 type User = {
     user: {
         userId: number
-        name: string
+        Firstname: string
+        Lastname: string
+        Email: string
         username: string
+        password: string
         role: string
     }
 }
@@ -23,7 +27,12 @@ const UserList = ({user}: User) => {
     const editDialog = (
         <>
             <DialogHeader>
+            <DialogTitle>Edit</DialogTitle>
+                <DialogDescription>
+                    Please make changes to the user data as you seem appropriate.
+                </DialogDescription>
             </DialogHeader>
+            <ManageUserForm user={user}/>
         </>
     )
     const deleteDialog = (
@@ -42,15 +51,25 @@ const UserList = ({user}: User) => {
     return (
         <TableRow>
             <TableCell className="text-center">{user.userId}</TableCell>
-            <TableCell>{user.name}</TableCell>
+            <TableCell>{user.Firstname}</TableCell>
+            <TableCell>{user.Lastname}</TableCell>
             <TableCell>{user.username}</TableCell>
             <TableCell className="text-center">{user.role}</TableCell>
-            <TableCell><IconEdit size={20} className="cursor-pointer"/></TableCell>
             <Dialog>
                 <TableCell>
-                <DialogTrigger asChild>
-                    <IconTrash size={20} className="text-red-500 cursor-pointer"/>
-                </DialogTrigger>
+                    <DialogTrigger asChild>
+                        <IconEdit size={20} className="cursor-pointer"/>
+                    </DialogTrigger>
+                </TableCell>
+                <DialogContent>
+                    {editDialog}
+                </DialogContent>
+            </Dialog>
+            <Dialog>
+                <TableCell>
+                    <DialogTrigger asChild>
+                        <IconTrash size={20} className="text-red-500 cursor-pointer"/>
+                    </DialogTrigger>
                 </TableCell>
                 <DialogContent>
                     {deleteDialog}
