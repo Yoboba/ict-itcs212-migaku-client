@@ -63,3 +63,42 @@ export const mock_data = [
         status: '1',
     }
 ];
+
+export const userData = [
+    {
+        userId: 1,
+        Firstname: "Barak",
+        Lastname: "Obama",
+        Email: "qkNqH@example.com",
+        username: "obama007",
+        password: "123456",
+        role: "Admin"
+    },
+    {
+        userId: 2,
+        Firstname: "Donald",
+        Lastname: "Trump",
+        Email: "qkNqH@example.com",
+        username: "trump-wall",
+        password: "123456",
+        role: "Admin"
+    },
+    {
+        userId: 3,
+        Firstname: "Yayoi",
+        Lastname: "Zen",
+        Email: "qkNqH@example.com",
+        username: "yayoi-2000",
+        password: "123456",
+        role: "User"
+    },
+    {
+        userId: 4,
+        Firstname: "Kritjapak",
+        Lastname: "KritthungKitkat",
+        Email: "qkNqH@example.com",
+        username: "kitkat-888",
+        password: "123456",
+        role: "User"
+    }
+];
