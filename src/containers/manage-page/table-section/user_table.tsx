@@ -7,6 +7,15 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableHeader, TableBody, TableHead, TableRow } from "@/components/ui/table"
 import UserList from "./user_list"
 import { userData } from "../constants/mockdata"
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog"
+import ManageUserForm from "./manage_user_form";
 
 const UserTable = () => {
     const [viewState, setViewState] = useState('all');
@@ -26,10 +35,32 @@ const UserTable = () => {
               <div id="table-container w-full flex-col items-center">
                 <div id="table-header" className="flex space-x-2 items-center justify-between p-4">
                   <TableSearchBar/>
-                  <Button className="h-full">
-                    <IconUserPlus size={16} className="mr-2"/>
-                    Add User
-                  </Button>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                        <Button className="h-full">
+                            <IconUserPlus size={16} className="mr-2"/>
+                            Add User
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Add User</DialogTitle>
+                                <DialogDescription>
+									Please fill in the required information marked with an
+									asterisk (<span className="text-red-500">*</span>).
+								</DialogDescription>
+                        </DialogHeader>
+                        <ManageUserForm user={{
+                                userId: 0,
+                                Firstname: "",
+                                Lastname: "",
+                                Email: "",
+                                username: "",
+                                password: "",
+                                role: ""
+                            }}/>
+                    </DialogContent>
+                  </Dialog>
                 </div>
                 <div id="table-subhead" className="flex space-x-4 justify-left px-4 pb-4">
                     <Tabs defaultValue="all">
@@ -45,8 +76,9 @@ const UserTable = () => {
                     <TableHeader>
                         <TableRow>
                             <TableHead className="text-center w-[10%]">User ID</TableHead>
-                            <TableHead className="w-[35%]">Name</TableHead>
-                            <TableHead className="w-[35%]">Username</TableHead>
+                            <TableHead className="w-[25%]">Firstname</TableHead>
+                            <TableHead className="w-[25%]">Lastname</TableHead>
+                            <TableHead className="w-[20%]">Username</TableHead>
                             <TableHead className="text-center w-[10%]">Role</TableHead>
                             <TableHead className="w-[5%]"></TableHead>
                             <TableHead className="w-[5%]"></TableHead>
