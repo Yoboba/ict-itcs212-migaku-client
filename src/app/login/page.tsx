@@ -1,4 +1,4 @@
-import YouShallNotPass from "@/containers/Login-Page";
+import YouShallNotPass from "@/containers/Login-Page/Login";
 
 export default function LoginPage() {
     return (
