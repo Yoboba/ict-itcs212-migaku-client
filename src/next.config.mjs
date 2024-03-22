@@ -6,6 +6,11 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'via.placeholder.com',
                 port: '',
+            },
+            {
+                protocol: 'https',
+                hostname: 'konachan.net',
+                port: '',
             }
         ]
     },

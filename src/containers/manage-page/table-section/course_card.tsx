@@ -24,6 +24,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import ManageCourseForm from "./manage_course_form"
+import CourseImage from "./course_image"
 
 type CourseProps = {
     course: {
@@ -77,19 +78,14 @@ const CourseCard = ({course}: CourseProps) => {
     const [dialogState, setDialogState] = useState('edit')
 
     if (!course.imgSrc) {
-        course.imgSrc = "https://via.placeholder.com/180x180"
+        course.imgSrc = "https://konachan.net/sample/950f7c702854f67d021882be1af2befd/Konachan.com%20-%20374218%20sample.jpg"
     }
+
   return (
     <div id="CardContainer" className='relative h-[180px] w-full bg-slate-200 rounded-md overflow-hidden flex-col items-center justify-center'>
-        <div id="course-banner" className=''>
-            <Image
-                src={course.imgSrc}
-                alt="Course Banner"
-                fill
-                style={{
-                    objectFit: 'cover'
-                }}
-            />
+        <div id="course-banner" className='w-full h-full relative'>
+            <div id='dimmer' className="absolute bg-slate-900 w-full h-full"/>
+            <CourseImage src={course.imgSrc}/>
         </div>
         <div id="course-category" className="absolute top-1 left-[4px] font-semibold text-sm px-2 bg-slate-600 text-white rounded-[4px] cursor-pointer">
             <TooltipProvider delayDuration={100}>
@@ -107,7 +103,7 @@ const CourseCard = ({course}: CourseProps) => {
             <Dialog>
                 <DropdownMenu>
                     <DropdownMenuTrigger>
-                        <IconDotsVertical size={20}/>
+                        <IconDotsVertical size={20} className=" text-white"/>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="">
                         <DialogTrigger asChild onClick={() => {setDialogState('edit')}}>
