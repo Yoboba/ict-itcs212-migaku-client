@@ -19,6 +19,8 @@ import {
     SelectValue,
   } from "@/components/ui/select"
 import { SliderRange } from "@/components/ui/slider-range"
+import { mockData } from "@/containers/manage-page/constants/mockdata";
+import CourseCard from "@/containers/manage-page/table-section/course_card";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { IconFilterFilled, IconSearch, IconStarFilled } from "@tabler/icons-react"
 
@@ -97,6 +99,16 @@ export default function Browse() {
                             <Label className="mb-2">Instructor Name:</Label>
                             <Input placeholder="ex. Albus Dumbledore"></Input>
                         </div>
+                    </div>
+                    <div id="course-results" className="p-4 rounded-md border h-auto mt-4 mx-4">
+                    <div
+					id="course-data"
+					className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+				>
+					{mockData.map((item, index) => (
+						<CourseCard key={index} course={item} />
+					))}
+				</div>
                     </div>
                 </div>
             </div>
