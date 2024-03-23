@@ -18,8 +18,8 @@ export default function Profile(props:ProfileProps) {
                 <AvatarFallback>AV</AvatarFallback>
             </Avatar>
             <div className="flex flex-col justify-center">
-                <h3 className=" text-lg">{props.name}</h3>
-                <p className=" text-sm font-normal">{props.role}</p>
+                <h3 className=" text-md sm:text-lg">{props.name}</h3>
+                <p className=" text-xs font-light sm:text-sm sm:font-normal">{props.role}</p>
             </div>
         </div>
     )
