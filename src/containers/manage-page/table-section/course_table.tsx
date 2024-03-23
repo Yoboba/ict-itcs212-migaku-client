@@ -55,7 +55,7 @@ const CourseTable = () => {
 					className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
 				>
 					{mockData.map((item, index) => (
-						<CourseCard key={index} course={item} />
+						<CourseCard variant="manage" key={index} course={item} />
 					))}
 				</div>
 			</div>

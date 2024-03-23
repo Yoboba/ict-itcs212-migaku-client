@@ -23,63 +23,63 @@ import { IconFilterFilled, IconSearch, IconStarFilled } from "@tabler/icons-reac
 
 export default function Browse() {
     return (
-        <div className="flex-col lg2:grid md:grid-cols-12 w-full p-4 h-full mt-16 mx-4 gap-2">
+        <div className="lg2:grid mx-4 mt-16 size-full flex-col gap-2 p-4 md:grid-cols-12">
                 <div id="filter" className="lg2:col-span-3">
                     <Card className="mt-4">
                         <CardHeader>
-                            <CardTitle className="text-2xl font-semibold flex">Filter <IconFilterFilled size={25} className="text-black mt-1 ml-2"/></CardTitle>
+                            <CardTitle className="flex text-2xl font-semibold">Filter <IconFilterFilled size={25} className="ml-2 mt-1 text-black"/></CardTitle>
                         </CardHeader>
-                        <CardContent className="border-b-2 border-gray-200 mx-4">
+                        <CardContent className="mx-4 border-b-2 border-gray-200">
                             <div className="text-xl font-semibold">Price Range</div>
                             <SliderRange className="mt-4" defaultValue={[1000,9000]} min={0} max={10000}/>
                         </CardContent>
-                        <CardContent className="mt-4 mx-4">
+                        <CardContent className="mx-4 mt-4">
                             <div className="text-xl font-semibold">User Rating</div>
-                            <div className="flex space-x-2">
+                            <div className="flex space-x-2"> 
                                 <Checkbox className="mt-4" defaultChecked/>
-                                <div className="text-lg font-semibold mt-2">{'> 4'}</div>
-                                <div className="flex space-x-2 mt-3">
-                                    {Array(4).fill(<IconStarFilled size={20} className="text-c7" />)}
+                                <div className="mt-2 text-lg font-semibold">{'> 4'}</div>
+                                <div className="mt-3 flex space-x-2">
+                                    {Array(4).fill(<IconStarFilled key="4s" size={20} className="text-c7" />)}
                                 </div>
                             </div>
                             <div className="flex space-x-2">
                                 <Checkbox className="mt-4" defaultChecked/>
-                                <div className="text-lg font-semibold mt-2">{'> 3'}</div>
-                                <div className="flex space-x-2 mt-3">
-                                    {Array(3).fill(<IconStarFilled size={20} className="text-c7" />)}
+                                <div className="mt-2 text-lg font-semibold">{'> 3'}</div>
+                                <div className="mt-3 flex space-x-2">
+                                    {Array(3).fill(<IconStarFilled key="3s" size={20}  className="text-c7" />)}
                                 </div>
                             </div>
                             <div className="flex space-x-2">
                                 <Checkbox className="mt-4" defaultChecked/>
-                                <div className="text-lg font-semibold mt-2">{'> 2'}</div>
-                                <div className="flex space-x-2 mt-3">
-                                    {Array(2).fill(<IconStarFilled size={20} className="text-c7" />)}
+                                <div className="mt-2 text-lg font-semibold">{'> 2'}</div>
+                                <div className="mt-3 flex space-x-2">
+                                    {Array(2).fill(<IconStarFilled key="2s" size={20} className="text-c7" />)}
                                 </div>
                             </div>
                             <div className="flex space-x-2">
                                 <Checkbox className="mt-4" defaultChecked/>
-                                <div className="text-lg font-semibold mt-2">{'> 1'}</div>
-                                <div className="flex space-x-2 mt-3">
-                                    <IconStarFilled size={20} className="text-c7" />
+                                <div className="mt-2 text-lg font-semibold">{'> 1'}</div>
+                                <div className="mt-3 flex space-x-2">
+                                    <IconStarFilled key="1s" size={20} className="text-c7" />
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
                 </div>
                 <div id="browsing" className="lg2:col-span-9">
-                    <div className="grid grid-cols-12 gap-4 mt-4 mx-4">
+                    <div className="mx-4 mt-4 grid grid-cols-12 gap-4">
                         <div className="col-span-10">
                             <Input placeholder="Search"/>
                         </div>
                         <div className="col-span-2">
-                            <Button className="w-full bg-[#ff7a7a] hover:bg-red-500"><IconSearch size={20} className="text-white font-bold" /></Button>
+                            <Button className="w-full bg-[#ff7a7a] hover:bg-red-500"><IconSearch size={20} className="font-bold text-white" /></Button>
                         </div>
                     </div>
-                    <div className="grid grid-cols-12 gap-4 mt-4 mx-4">
+                    <div className="mx-4 mt-4 grid grid-cols-12 gap-4">
                         <div className="col-span-6">
                             <Label className="mb-2">Course Category:</Label>
                             <Select defaultValue="ALL">
-                                <SelectTrigger className="w-full mt-0">
+                                <SelectTrigger className="mt-0 w-full">
                                     <SelectValue placeholder="Course Category" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -97,10 +97,10 @@ export default function Browse() {
                             <Input placeholder="ex. Albus Dumbledore"></Input>
                         </div>
                     </div>
-                    <div id="course-results" className="flex-col p-4 rounded-md border h-auto mt-4 mx-4">
+                    <div id="course-results" className="mx-4 mt-4 h-auto flex-col rounded-md border p-4">
                         <div>
                         <Select>
-                            <SelectTrigger className="w-[200px]">
+                            <SelectTrigger className="w-full sm:w-[400px]">
                                 <SelectValue placeholder="Sort By" />
                             </SelectTrigger>
                             <SelectContent>
@@ -112,10 +112,10 @@ export default function Browse() {
                         </div>
                         <div
                             id="course-data"
-                            className="w-full mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+                            className="mt-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
                         >
                             {mockData.map((item, index) => (
-                                <CourseCard key={index} course={item} />
+                                <CourseCard variant="browse" key={index} course={item} />
                             ))}
                         </div>
                     </div>
