@@ -7,11 +7,11 @@ import AddToFavorite from "./add_to_favorite"
 
 export default function CourseCard() {
     return (
-        <main className="flex flex-col items-center justify-center gap-10 rounded-xl bg-white p-10  drop-shadow-xl sm:flex-row ">
+        <main className="flex flex-col items-center justify-center gap-5 rounded-xl bg-white p-10 drop-shadow-xl sm:gap-10 md:flex-col lg:flex-row ">
             <Image src={"/images/snow_miku.jpg"} alt={"Course Image"} height={350} width={350} className=" size-[200px] rounded-xl sm:size-[350px]"/>
             <div className="flex flex-col items-center justify-between gap-10 sm:items-start">
-                <div className="flex flex-col items-center justify-between gap-5 sm:flex-row sm:items-start">
-                    <div className="flex flex-col gap-5">
+                <div className="flex flex-col items-center justify-between gap-2 sm:flex-row sm:items-start">
+                    <div className="flex flex-col">
                         <h1 className=" text-3xl font-bold sm:text-5xl">Course Name</h1>
                         <p className="hidden sm:flex sm:text-lg">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s.</p>
                     </div>
