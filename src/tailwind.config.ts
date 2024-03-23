@@ -23,6 +23,7 @@ const config = {
       'md': '768px',
       'nowrap': '840px',
       'lg': '1024px',
+      'lg2': '1086px',
       'xl': '1280px',
       '2xl': '1536px',
     },

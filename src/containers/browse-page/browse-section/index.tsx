@@ -3,13 +3,10 @@ import { Button } from "@/components/ui/button"
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
   } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
-import { FormControl } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import {
     Select,
@@ -26,8 +23,8 @@ import { IconFilterFilled, IconSearch, IconStarFilled } from "@tabler/icons-reac
 
 export default function Browse() {
     return (
-        <div className="grid grid-cols-12 w-full h-full mt-24 mx-4 gap-2">
-                <div id="filter" className="col-span-3">
+        <div className="flex-col lg2:grid md:grid-cols-12 w-full p-4 h-full mt-16 mx-4 gap-2">
+                <div id="filter" className="lg2:col-span-3">
                     <Card className="mt-4">
                         <CardHeader>
                             <CardTitle className="text-2xl font-semibold flex">Filter <IconFilterFilled size={25} className="text-black mt-1 ml-2"/></CardTitle>
@@ -69,17 +66,17 @@ export default function Browse() {
                         </CardContent>
                     </Card>
                 </div>
-                <div id="browsing" className="col-span-9">
+                <div id="browsing" className="lg2:col-span-9">
                     <div className="grid grid-cols-12 gap-4 mt-4 mx-4">
-                        <div className="col-span-11">
+                        <div className="col-span-10">
                             <Input placeholder="Search"/>
                         </div>
-                        <div className="col-span-1">
+                        <div className="col-span-2">
                             <Button className="w-full bg-[#ff7a7a] hover:bg-red-500"><IconSearch size={20} className="text-white font-bold" /></Button>
                         </div>
                     </div>
                     <div className="grid grid-cols-12 gap-4 mt-4 mx-4">
-                        <div className="col-span-3">
+                        <div className="col-span-6">
                             <Label className="mb-2">Course Category:</Label>
                             <Select defaultValue="ALL">
                                 <SelectTrigger className="w-full mt-0">
@@ -95,20 +92,32 @@ export default function Browse() {
                                 </SelectContent>
                             </Select>
                         </div>
-                        <div className="col-span-3">
+                        <div className="col-span-6">
                             <Label className="mb-2">Instructor Name:</Label>
                             <Input placeholder="ex. Albus Dumbledore"></Input>
                         </div>
                     </div>
-                    <div id="course-results" className="p-4 rounded-md border h-auto mt-4 mx-4">
-                    <div
-					id="course-data"
-					className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
-				>
-					{mockData.map((item, index) => (
-						<CourseCard key={index} course={item} />
-					))}
-				</div>
+                    <div id="course-results" className="flex-col p-4 rounded-md border h-auto mt-4 mx-4">
+                        <div>
+                        <Select>
+                            <SelectTrigger className="w-[200px]">
+                                <SelectValue placeholder="Sort By" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="cs-name">Course Name</SelectItem>
+                                <SelectItem value="cs-cat">Course Category</SelectItem>
+                                <SelectItem value="usr-rating">User Rating</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        </div>
+                        <div
+                            id="course-data"
+                            className="w-full mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+                        >
+                            {mockData.map((item, index) => (
+                                <CourseCard key={index} course={item} />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
