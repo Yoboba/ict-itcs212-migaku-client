@@ -136,7 +136,7 @@ const CourseCard = ({course, variant}: CourseProps) => {
         </div>
     </div> 
     :   
-        <Link href={`/details/${course.courseId}`}>
+        <Link href={`/detail/${course.courseId}`}>
             <div id="CardContainer" className='relative h-[180px] w-full flex-col items-center justify-center overflow-hidden rounded-md bg-slate-200'>
                 <div id="course-banner" className='relative size-full'>
                     <div id='dimmer' className="absolute size-full bg-slate-900"/>
