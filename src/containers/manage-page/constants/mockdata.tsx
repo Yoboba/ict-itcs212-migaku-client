@@ -7,6 +7,7 @@ export const mockData = [
         courseDes: "Learn the fundamentals of web programming including HTML, CSS, and JavaScript.",
         price: 3499,
         status: '1',
+        imgSrc: 'https://konachan.net/sample/85adfe0dcc31ef9325c9e1fa1eefc9c4/Konachan.com%20-%20373935%20sample.jpg'
     },
     {
         courseId: 2,
@@ -16,6 +17,7 @@ export const mockData = [
         courseDes: "Study of advanced mathematical concepts in calculus.",
         price: 4399,
         status: '1',
+        imgSrc: 'https://konachan.net/sample/2ff974d50c8318ab870a676878131a84/Konachan.com%20-%20373678%20sample.jpg'
     },
     {
         courseId: 3,
@@ -25,6 +27,7 @@ export const mockData = [
         courseDes: "Basic concepts of physics including mechanics, thermodynamics, and electromagnetism.",
         price: 2799,
         status: '1',
+        imgSrc: 'https://konachan.net/sample/cffdcdcfd41ca025b2c68510915cd514/Konachan.com%20-%20372560%20sample.jpg'
     },
     {
         courseId: 4,
@@ -34,6 +37,7 @@ export const mockData = [
         courseDes: "Introduction to Spanish language and Hispanic culture.",
         price: 2999,
         status: '1',
+        imgSrc: 'https://konachan.net/sample/51ab97a3786d1e6b735a8cd5539d7a8e/Konachan.com%20-%20370112%20sample.jpg'
     },
     {
         courseId: 5,
@@ -43,6 +47,7 @@ export const mockData = [
         courseDes: "Basic concepts and theories in sociology.",
         price: 999,
         status: '1',
+        imgSrc: 'https://konachan.net/sample/1aa4d7fbd961bd7209f0cd02719c9b93/Konachan.com%20-%20369588%20sample.jpg'
     },
     {
         courseId: 6,
@@ -52,6 +57,7 @@ export const mockData = [
         courseDes: "Explore advanced topics in web development such as frameworks and libraries.",
         price: 2499,
         status: '1',
+        imgSrc: 'https://konachan.net/image/02fc7eb3f97df09ce4293af86d64cade/Konachan.com%20-%20363856%202girls%20animal_ears%20aqua_eyes%20aqua_hair%20balabling%20blush%20bunny_ears%20bunnygirl%20headphones%20hug%20long_hair%20sketch%20tattoo%20twintails%20vocaloid%20wristwear.jpg'
     },
     {
         courseId: 7,
@@ -61,6 +67,7 @@ export const mockData = [
         courseDes: "Study of vectors, matrices, and linear transformations.",
         price: 599,
         status: '1',
+        imgSrc: 'https://konachan.net/sample/ee9b070855ca3d21c39dbb0af2151311/Konachan.com%20-%20363776%20sample.jpg'
     }
 ];
 
