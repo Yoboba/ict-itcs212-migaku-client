@@ -1,11 +1,12 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { IconSearch } from "@tabler/icons-react";
 import { Input } from "../ui/input";
 
 export default function SearchBar() {
     return (
-        <div className="relative w-[300px] h-8 hidden sm:flex">
-            <Input type="text" placeholder="What do you want to learn ?" className="focus-visible:ring-slate-200 rounded-full h-8 w-full absolute border-c0 text-xs"/>
-            <IconSearch className="absolute top-1 right-2 translate-y-[1px] text-c0" size={20}/>
+        <div className="relative hidden h-8 w-[300px] sm:flex">
+            <Input type="text" placeholder="What do you want to learn ?" className="border-c0 absolute h-8 w-full rounded-full text-xs focus-visible:ring-slate-200"/>
+            <IconSearch className="text-c0 absolute right-2 top-1 translate-y-px" size={20}/>
         </div>
     )
 }

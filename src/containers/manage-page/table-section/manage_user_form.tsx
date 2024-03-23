@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 import { useForm } from "react-hook-form"
 import {
     Form,
@@ -89,8 +90,8 @@ const ManageUserForm = ({user}: User) => {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-                <div className="grid grid-rows-4 grid-flow-col gap-4">
-                    <div className="grid grid-col-2 grid-flow-col gap-4">
+                <div className="grid grid-flow-col grid-rows-4 gap-4">
+                    <div className="grid-col-2 grid grid-flow-col gap-4">
                         <div>
                         <Label htmlFor="name" className="">
                             First Name <span className="text-red-500">*</span>
@@ -130,7 +131,7 @@ const ManageUserForm = ({user}: User) => {
                         />
                         </div>
                     </div>
-                    <div className="grid grid-col-3 grid-flow-col gap-4">
+                    <div className="grid-col-3 grid grid-flow-col gap-4">
                         <div className="col-span-2">
                         <Label htmlFor="name" className="">
                             Email <span className="text-red-500">*</span>
@@ -164,7 +165,7 @@ const ManageUserForm = ({user}: User) => {
                                                 defaultValue={field.value}
                                             >
                                                 <FormControl>
-                                                    <SelectTrigger className="w-full mt-0">
+                                                    <SelectTrigger className="mt-0 w-full">
                                                         <SelectValue placeholder="Role" />
                                                     </SelectTrigger>
                                                 </FormControl>
@@ -179,7 +180,7 @@ const ManageUserForm = ({user}: User) => {
                                 />  
                         </div>
                     </div>
-                    <div className="grid grid-col-2 grid-flow-col gap-4">
+                    <div className="grid-col-2 grid grid-flow-col gap-4">
                         <div>
                         <Label htmlFor="name" className="">
                             Username <span className="text-red-500">*</span>
@@ -220,8 +221,8 @@ const ManageUserForm = ({user}: User) => {
                         </div>
                     </div>
                     <div>
-                        <Button type="submit" className="w-full mt-4">
-                            {user.userId == 0 ? 'Create New User' : 'Save Changes'}
+                        <Button type="submit" className="mt-4 w-full">
+                            {user.userId === 0 ? 'Create New User' : 'Save Changes'}
                         </Button>
                     </div>
                 </div>

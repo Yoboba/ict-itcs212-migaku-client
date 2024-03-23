@@ -92,7 +92,7 @@ const ManageCourseForm = ({
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <div
                     id="dialog-content"
-                    className="flex gap-6 flex-col nowrap:flex-row w-full"
+                    className="nowrap:flex-row flex w-full flex-col gap-6"
                 >
                     <div id="container-left" className="flex-col space-y-4">
                         <div id="course-name-form" className="grid w-full gap-1.5">
@@ -116,10 +116,10 @@ const ManageCourseForm = ({
                         </div>
                         <div
                             id="image-upload"
-                            className="min-w-[370px] h-[180px] border-[2px] border-dashed rounded-md mt-4 cursor-pointer"
+                            className="mt-4 h-[180px] min-w-[370px] cursor-pointer rounded-md border-2 border-dashed"
                         ></div>
                     </div>
-                    <div id="container-right" className="flex-col w-full space-y-4">
+                    <div id="container-right" className="w-full flex-col space-y-4">
                         <div id="course-desc-form" className="grid w-full gap-1.5">
                             <Label htmlFor="course-desc">Course Description</Label>
                             <FormField 
@@ -142,7 +142,7 @@ const ManageCourseForm = ({
                         <div className="flex gap-2">
                             <div
                                 id="course-category-form"
-                                className="grid gap-1.5 w-[60%]"
+                                className="grid w-3/5 gap-1.5"
                             >
                                 <Label htmlFor="select-category" className="">
                                     Course Category <span className="text-red-500">*</span>
@@ -157,7 +157,7 @@ const ManageCourseForm = ({
                                                 defaultValue={field.value}
                                             >
                                                 <FormControl>
-                                                    <SelectTrigger className="w-full mt-0">
+                                                    <SelectTrigger className="mt-0 w-full">
                                                         <SelectValue placeholder="Course Category" />
                                                     </SelectTrigger>
                                                 </FormControl>
@@ -176,7 +176,7 @@ const ManageCourseForm = ({
                             </div>
                             <div
                                 id="course-status-form"
-                                className="grid w-full gap-1.5 flex-1"
+                                className="grid w-full flex-1 gap-1.5"
                             >
                                 <Label htmlFor="select-status" className="">
                                     Course Status <span className="text-red-500">*</span>
@@ -237,7 +237,7 @@ const ManageCourseForm = ({
                         </div>
                     </div>
                 </div>
-                <Button type="submit" className="w-full mt-4">
+                <Button type="submit" className="mt-4 w-full">
                     {course ? 'Save Changes' : 'Create New Course'}
                 </Button>
             </form>

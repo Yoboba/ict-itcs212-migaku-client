@@ -68,7 +68,7 @@ const UserList = ({user}: User) => {
             <Dialog>
                 <TableCell>
                     <DialogTrigger asChild>
-                        <IconTrash size={20} className="text-red-500 cursor-pointer"/>
+                        <IconTrash size={20} className="cursor-pointer text-red-500"/>
                     </DialogTrigger>
                 </TableCell>
                 <DialogContent>

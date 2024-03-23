@@ -1,4 +1,4 @@
-export const mock_data = [
+export const mockData = [
     {
         courseId: 1,
         courseCode: "ITCS212",

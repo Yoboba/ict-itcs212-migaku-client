@@ -12,8 +12,8 @@ interface ProfileProps {
 
 export default function Profile(props:ProfileProps) {
     return (
-        <div className="flex gap-3 items-center">
-            <Avatar className=" h-16 w-16">
+        <div className="flex items-center gap-3">
+            <Avatar className=" size-16">
                 <AvatarImage src={props.avatar} />
                 <AvatarFallback>AV</AvatarFallback>
             </Avatar>
