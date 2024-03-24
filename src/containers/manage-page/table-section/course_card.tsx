@@ -1,5 +1,4 @@
 'use client'
-import Image from "next/image"
 import { useState } from "react"
 import {
     Tooltip,
@@ -25,6 +24,7 @@ import {
 } from "@/components/ui/dialog";
 import ManageCourseForm from "./manage_course_form"
 import CourseImage from "./course_image"
+import Link from "next/link"
 
 type CourseProps = {
     course: {
@@ -36,7 +36,8 @@ type CourseProps = {
         price: number,
         status: string,
         imgSrc?: string,
-    }
+    },
+    variant: string, 
   }
 
 type CategoryMap = {
@@ -51,7 +52,7 @@ const categoryMap: CategoryMap = {
     "SO": "Social Sciences",
 };
 
-const CourseCard = ({course}: CourseProps) => {
+const CourseCard = ({course, variant}: CourseProps) => {
     const editDialog = (
         <>
             <DialogHeader>
@@ -82,12 +83,15 @@ const CourseCard = ({course}: CourseProps) => {
     }
 
   return (
-    <div id="CardContainer" className='relative h-[180px] w-full bg-slate-200 rounded-md overflow-hidden flex-col items-center justify-center'>
-        <div id="course-banner" className='w-full h-full relative'>
-            <div id='dimmer' className="absolute bg-slate-900 w-full h-full"/>
+    <>
+        {
+        variant === 'manage' ? 
+        <div id="CardContainer" className='relative h-[180px] w-full flex-col items-center justify-center overflow-hidden rounded-md bg-slate-200'>
+        <div id="course-banner" className='relative size-full'>
+            <div id='dimmer' className="absolute size-full bg-slate-900"/>
             <CourseImage src={course.imgSrc}/>
         </div>
-        <div id="course-category" className="absolute top-1 left-[4px] font-semibold text-sm px-2 bg-slate-600 text-white rounded-[4px] cursor-pointer">
+        <div id="course-category" className="absolute left-[4px] top-1 cursor-pointer rounded-[4px] bg-slate-600 px-2 text-sm font-semibold text-white">
             <TooltipProvider delayDuration={100}>
                 <Tooltip>
                     <TooltipTrigger asChild>
@@ -125,12 +129,41 @@ const CourseCard = ({course}: CourseProps) => {
                 </DialogContent>
             </Dialog>
         </div>
-        <div id="card-footer" className='bg-slate-50 w-full py-2 px-4 flex absolute bottom-0'>
+        <div id="card-footer" className='absolute bottom-0 flex w-full bg-slate-50 px-4 py-2'>
             <div id="course-name">
                 <div id="course-name" className='text-lg font-semibold'>{course.courseName}</div>
             </div>
         </div>
-    </div>
+    </div> 
+    :   
+        <Link href={`/detail/${course.courseId}`}>
+            <div id="CardContainer" className='relative h-[180px] w-full flex-col items-center justify-center overflow-hidden rounded-md bg-slate-200'>
+                <div id="course-banner" className='relative size-full'>
+                    <div id='dimmer' className="absolute size-full bg-slate-900"/>
+                    <CourseImage src={course.imgSrc}/>
+                </div>
+                <div id="course-category" className="absolute left-[4px] top-1 cursor-pointer rounded-[4px] bg-slate-600 px-2 text-sm font-semibold text-white">
+                    <TooltipProvider delayDuration={100}>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <div className="">{course.courseCode}</div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                {categoryMap[course.courseCat]}
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>         
+                </div>
+                <div id="card-footer" className='absolute bottom-0 flex w-full bg-slate-50 px-4 py-2'>
+                    <div id="course-name">
+                        <div id="course-name" className='text-lg font-semibold'>{course.courseName}</div>
+                    </div>
+                </div>
+            </div>
+        </Link>
+        
+    }
+    </>
   )
 }
 
