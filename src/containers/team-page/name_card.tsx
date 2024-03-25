@@ -11,8 +11,8 @@ type NameCardProps = {
 
 export default function NameCard({user}: NameCardProps) {
     return (
-        <main className="bg-white rounded-lg overflow-hidden shadow-2xl h-fit w-fit">
-            <Image src={user.ImgSrc || "/images/error.png"} alt={"Profile Image"} height={350} width={350} className=" h-[175px] w-[350px] sm:h-[175px] w-[350px] "/>
+        <main className="bg-white rounded-lg overflow-hidden shadow-2xl h-fit w-1/5">
+            <Image src={user.ImgSrc || "/images/error.png"} alt={"Profile Image"} height={350} width={400} className=" h-[175px] w-[400px] sm:h-[175px] w-[400px] "/>
             <div className = "flex flex-col m-5 gap-y-1">
                 <p className="text-xl">{user.Name|| "-"} </p>
                 <p className="text-gray-600">{user.Role|| "-"}</p>
