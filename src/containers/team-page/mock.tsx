@@ -20,7 +20,7 @@ export const mockUser = [
     {
         Name: "Abe Ebe",
         Role: "Software Engineer",
-        Intro: "Lorem IPIPIP",
+        Intro: "Lorem Ipsum",
         ImgSrc: ""
     },
     {
