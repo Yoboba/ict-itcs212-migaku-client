@@ -1,11 +1,11 @@
-import YouShallNotPass from "@/containers/Login-Page/Login";
-import MyFutureIsAVoid from "@/containers/Login-Page/BrightenYourFuture";
+import LoginSection from "@/containers/login-page/login-section";
+import ContentSection from "@/containers/login-page/content-section";
 
 export default function LoginPage() {
     return (
-        <div className="w-full h-screen flex justify-center items-center">
-            <MyFutureIsAVoid/>
-            <YouShallNotPass/>
+        <div className="flex h-screen w-full">
+            <ContentSection/>
+            <LoginSection/>
         </div>
     )
 }
