@@ -59,6 +59,7 @@ export default function LoginSection() {
                 res.text().then((json) => {
                     const jsonData = JSON.parse(json)
                     document.cookie = `UserId=${jsonData['UserId']}; max-age=3600; path=/`;
+                    document.cookie = `Role=${jsonData['Role']}; max-age=3600; path=/`;
                 })
                 setIsLogin(isLogin())
                 console.log(Login)
@@ -68,6 +69,7 @@ export default function LoginSection() {
             {
                 // for logout - unset cookie
                 //document.cookie = "UserId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                //document.cookie = "Role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 toast({
                     title: "Login Failed",
                     description: `Invalid Username or Password`,
