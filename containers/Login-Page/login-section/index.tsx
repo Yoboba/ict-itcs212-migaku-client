@@ -12,34 +12,75 @@ import {
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input";
+import isLogin from "@/util/isLogin";
 
 const formSchema = z.object({
-    email: z.string().email({message : "Invalid Email.."}),
+    username: z.string().min(1, {message : "Username cannot be null"}),
     password: z.string().min(1, {message : "Password cannot be null"})
 })
 
+type LoginData = {
+    username : string
+    password : string
+}
+
 export default function LoginSection() {
+    // If login already go to browse
+    //if(isLogin()) window.location.href = '/browse';
+
     const { toast } = useToast()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            email : "",
+            username : "",
             password : ""
         }
     })
+
+    const authenticate = (data: LoginData) => {
+        fetch("http://localhost:3001/api/auth", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        }).then((res) => {
+            if (res.status === 200) {
+                // toast({
+                //     title: "Succesfully Login",
+                //     description: `${JSON.stringify(data)}`,
+                // })
+                res.text().then((json) => {
+                    const jsonData = JSON.parse(json)
+                    document.cookie = `UserId=${jsonData['UserId']}; max-age=3600; path=/`;
+                    document.cookie = `Role=${jsonData['Role']}; max-age=3600; path=/`;
+                })
+                //console.log(Login)
+                window.location.href = '/browse';
+            }
+            else
+            {
+                // for logout - unset cookie
+                //document.cookie = "UserId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                //document.cookie = "Role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                toast({
+                    title: "Login Failed",
+                    description: `Invalid Username or Password`,
+                })
+            }
+        })
+    }
     
     const onSubmit = (values: z.infer<typeof formSchema>) => {
         const data = {
         ...values,
-        email : values.email,
+        username : values.username,
         password: values.password
         }
         
-        console.log(data)
-        toast({
-            title : "Succesfully Login",
-            description : `${JSON.stringify(data)}`
-        })
+        //console.log(data)
+        authenticate(data)
+
     }
     return (
         <div className="flex h-screen w-full items-center justify-center md:w-1/2">
@@ -51,17 +92,17 @@ export default function LoginSection() {
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <div>
                             <label className="text-m mb-2 block text-gray-700" htmlFor="username">
-                            Email
+                            Username
                             </label>
                             {/* <input className="focus:shadow-outline w-full appearance-none rounded-lg border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none" id="username" type="text" /> */}
                             <FormField 
                                 control={form.control} 
-                                name="email"
+                                name="username"
                                 render={({field}) => (
                                     <FormItem>
                                         <FormControl>
-                                            <Input placeholder="your email" 
-                                                className={`col-span-3 ${form.formState.errors.email ? 'border-red-500' : ''}`}
+                                            <Input placeholder="Enter your username" 
+                                                className={`col-span-3 ${form.formState.errors.username ? 'border-red-500' : ''}`}
                                                 {...field} />
                                         </FormControl>
                                         <FormMessage />
@@ -80,8 +121,8 @@ export default function LoginSection() {
                                 render={({field}) => (
                                     <FormItem>
                                         <FormControl>
-                                            <Input placeholder="your password" 
-                                                className={`col-span-3 ${form.formState.errors.email ? 'border-red-500' : ''}`}
+                                            <Input type="password" placeholder="Enter your password" 
+                                                className={`col-span-3 ${form.formState.errors.password? 'border-red-500' : ''}`}
                                                 {...field} />
                                         </FormControl>
                                         <FormMessage />
