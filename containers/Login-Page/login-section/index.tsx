@@ -12,9 +12,7 @@ import {
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/router";
 import isLogin from "@/util/isLogin";
-import { useEffect, useState } from "react";
 
 const formSchema = z.object({
     username: z.string().min(1, {message : "Username cannot be null"}),
@@ -27,6 +25,9 @@ type LoginData = {
 }
 
 export default function LoginSection() {
+    // If login already go to browse
+    //if(isLogin()) window.location.href = '/browse';
+
     const { toast } = useToast()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -35,13 +36,6 @@ export default function LoginSection() {
             password : ""
         }
     })
-
-    const [Login, setIsLogin] = useState<Boolean>();
-
-    useEffect(() => {
-        const interval = setInterval(() => {setIsLogin(isLogin())}, 500)
-        return () => clearInterval(interval);
-    }, [])
 
     const authenticate = (data: LoginData) => {
         fetch("http://localhost:3001/api/auth", {
@@ -61,9 +55,8 @@ export default function LoginSection() {
                     document.cookie = `UserId=${jsonData['UserId']}; max-age=3600; path=/`;
                     document.cookie = `Role=${jsonData['Role']}; max-age=3600; path=/`;
                 })
-                setIsLogin(isLogin())
-                console.log(Login)
-                //window.location.href = '/browse';
+                //console.log(Login)
+                window.location.href = '/browse';
             }
             else
             {
