@@ -1,16 +1,16 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast"
-import { useForm } from "react-hook-form"
-import { 
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormMessage,
+import { useToast } from "@/components/ui/use-toast";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
 } from "@/components/ui/form";
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import isLogin from "@/util/isLogin";
 
@@ -148,6 +148,53 @@ export default function LoginSection() {
                     </form>
                 </Form>
             </div>
-        </div>
-    )
+            <div>
+              <label
+                className="text-m my-2 block text-gray-700"
+                htmlFor="password"
+              >
+                Password
+              </label>
+              {/* <input className="focus:shadow-outline mb-3 w-full appearance-none rounded-lg border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none" id="password" type="password" /> */}
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        placeholder="your password"
+                        className={`col-span-3 ${form.formState.errors.username ? "border-red-500" : ""}`}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <p className="cursor-pointer text-right text-sm text-gray-400 hover:text-black">
+                Forgot Password?
+              </p>
+            </div>
+            <div className="my-4 flex justify-center">
+              <Button className="w-[50%] text-center" type="submit">
+                Log in
+              </Button>
+            </div>
+            <div className="my-2 flex justify-center gap-2">
+              <div className="mb-2 w-[45%] border-b-2 border-gray-400"></div>
+              <p>or</p>
+              <div className="mb-2 w-[45%] border-b-2 border-gray-400"></div>
+            </div>
+            <div className="flex justify-center gap-2">
+              <p className="text-sm text-gray-400">New to us?</p>
+              <p className="cursor-pointer text-sm text-gray-400 hover:text-black">
+                Sign up
+              </p>
+            </div>
+          </form>
+        </Form>
+      </div>
+    </div>
+  );
 }
