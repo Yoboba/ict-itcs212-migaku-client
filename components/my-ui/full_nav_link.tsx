@@ -1,10 +1,9 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import Link from "next/link";
 import { Button } from "../ui/button";
-import UseCookie from "@/hooks/use_cookie";
+import { getCookie } from "@/utils/cookie";
 
 export default function FullNavLink() {
-  const cookie = UseCookie("UserId");
   return (
     <div className="hidden items-center gap-8 lg:flex">
       <Link href={"/browse"} className="text-c0 hover:underline">
@@ -13,9 +12,8 @@ export default function FullNavLink() {
       <Link href={"/team"} className="text-c0 hover:underline">
         About Us
       </Link>
-      {/* TODO : testing this nacbar state */}
-      {cookie?.value ? (
-        <div>{cookie.value}</div>
+      {getCookie("user_id")?.value ? (
+        <Button variant="default">Log Out</Button>
       ) : (
         <div className="flex items-center gap-8">
           <Link href={"/login"} className="text-c0 hover:underline">
