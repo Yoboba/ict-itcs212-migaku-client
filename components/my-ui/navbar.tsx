@@ -3,17 +3,26 @@ import Image from "next/image";
 import SearchBar from "./search_bar";
 import FullNavLink from "./full_nav_link";
 import MobileNavLink from "./mobile_nav_link";
+import Link from "next/link";
 
 export default function NavBar() {
-    return (
-        <nav className="fixed top-0 z-50 flex h-16 w-full justify-between bg-white px-8 py-4 drop-shadow-xl">
-            <div className="flex items-center gap-8">
-                <Image src="/assets/logo.svg" alt={"Migaku Logo"} width={35} height={35} className=" -translate-x-1 -translate-y-[2px]"/>
-                <SearchBar/>
-            </div>
-            {/* if screen width < 640px then display MobileNavLink */}
-            <FullNavLink/>
-            <MobileNavLink/>
-        </nav>
-    )
+  return (
+    <nav className="fixed top-0 z-50 flex h-16 w-full justify-between bg-white px-8 py-4 drop-shadow-xl">
+      <div className="flex items-center gap-8">
+        <Link href={"/"}>
+          <Image
+            src="/assets/logo.svg"
+            alt={"Migaku Logo"}
+            width={35}
+            height={35}
+            className=" -translate-x-1 -translate-y-[2px]"
+          />
+        </Link>
+        <SearchBar />
+      </div>
+      {/* if screen width < 640px then display MobileNavLink */}
+      <FullNavLink />
+      <MobileNavLink />
+    </nav>
+  );
 }

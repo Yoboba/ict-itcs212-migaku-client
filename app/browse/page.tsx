@@ -1,12 +1,12 @@
-'use client';
+"use client";
 import Browse from "@/containers/browse-page/browse-section";
-import isLogin from "@/util/isLogin";
+// import isLogin from "@/utils/isLogin";
 
 export default function BrowsePage() {
-    //console.log(isLogin())
-    return (
-        <div className="flex size-full">
-            <Browse/>
-        </div>
-    )
+  // console.log(isLogin())
+  return (
+    <div className="flex size-full">
+      <Browse />
+    </div>
+  );
 }
