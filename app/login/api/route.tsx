@@ -24,8 +24,8 @@ export async function POST(req: NextRequest) {
       responseFormat.status = 200;
       responseFormat.message = "Success";
       responseFormat.data = json;
-
       createCookie("user_id", json.UserId);
+      createCookie("user_role", json.Role);
     } else {
       responseFormat.status = response.status;
       responseFormat.message = "Invalid Username or Password";

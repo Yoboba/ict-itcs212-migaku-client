@@ -12,8 +12,15 @@ export default function FullNavLink() {
       <Link href={"/team"} className="text-c0 hover:underline">
         About Us
       </Link>
-      {getCookie("user_id")?.value ? (
-        <Button variant="default">Log Out</Button>
+      {getCookie("user_id") ? (
+        getCookie("user_role") ? (
+          <div className="flex items-center gap-8">
+            <Button variant="default">Manage</Button>
+            <Button variant="default">Log Out</Button>
+          </div>
+        ) : (
+          <Button variant="default">Log Out</Button>
+        )
       ) : (
         <div className="flex items-center gap-8">
           <Link href={"/login"} className="text-c0 hover:underline">
