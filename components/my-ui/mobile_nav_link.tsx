@@ -37,6 +37,9 @@ function DropDownNavLink() {
         Sign Up
       </Button>
       <Button variant="default" className="w-fit">
+        Manage
+      </Button>
+      <Button variant="default" className="w-fit">
         Log Out
       </Button>
     </div>
