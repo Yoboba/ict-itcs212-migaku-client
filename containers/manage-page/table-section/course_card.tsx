@@ -25,6 +25,11 @@ import {
 import ManageCourseForm from "./manage_course_form";
 import CourseImage from "./course_image";
 import Link from "next/link";
+import ITImg from "@/public/courseimages/369588.jpg";
+import MAImg from "@/public/courseimages/370112.jpg";
+import SCImg from "@/public/courseimages/372560.jpg";
+import LGImg from "@/public/courseimages/373678.jpg";
+import SOImg from "@/public/courseimages/373935.jpg";
 
 type CourseProps = {
   course: {
@@ -35,6 +40,8 @@ type CourseProps = {
     courseDes: string;
     price: number;
     status: string;
+    rating: number;
+    duration: number;
     imgSrc?: string;
   };
   variant: string;
@@ -44,12 +51,24 @@ type CategoryMap = {
   [key: string]: string;
 };
 
+type ImageMap = {
+  [key: string]: string;
+};
+
 const categoryMap: CategoryMap = {
   IT: "Information Technology",
   MA: "Mathematics",
   SC: "Science",
   LG: "Languages",
   SO: "Social Sciences",
+};
+
+const imageMap: ImageMap = {
+  IT: ITImg.src,
+  MA: MAImg.src,
+  SC: SCImg.src,
+  LG: LGImg.src,
+  SO: SOImg.src,
 };
 
 const CourseCard = ({ course, variant }: CourseProps) => {
@@ -77,10 +96,10 @@ const CourseCard = ({ course, variant }: CourseProps) => {
     </>
   );
   const [dialogState, setDialogState] = useState("edit");
+  let imgSrc = imageMap[course.courseCat];
 
-  if (!course.imgSrc) {
-    course.imgSrc =
-      "https://konachan.net/sample/950f7c702854f67d021882be1af2befd/Konachan.com%20-%20374218%20sample.jpg";
+  if (course.imgSrc) {
+    imgSrc = course.imgSrc;
   }
 
   return (
@@ -91,8 +110,8 @@ const CourseCard = ({ course, variant }: CourseProps) => {
           className="relative h-[180px] w-full flex-col items-center justify-center overflow-hidden rounded-md bg-slate-200"
         >
           <div id="course-banner" className="relative size-full">
-            <div id="dimmer" className="absolute size-full bg-slate-900" />
-            <CourseImage src={course.imgSrc} />
+            <div id="dimmer" className="absolute size-full bg-slate-200" />
+            <CourseImage src={imgSrc} />
           </div>
           <div
             id="course-category"
@@ -157,14 +176,14 @@ const CourseCard = ({ course, variant }: CourseProps) => {
           </div>
         </div>
       ) : (
-        <Link href={`/browse/${course.courseId}`}>
+        <Link href={`/detail/${course.courseId}`}>
           <div
             id="CardContainer"
             className="relative h-[180px] w-full flex-col items-center justify-center overflow-hidden rounded-md bg-slate-200"
           >
             <div id="course-banner" className="relative size-full">
               <div id="dimmer" className="absolute size-full bg-slate-900" />
-              <CourseImage src={course.imgSrc} />
+              <CourseImage src={imgSrc} />
             </div>
             <div
               id="course-category"
