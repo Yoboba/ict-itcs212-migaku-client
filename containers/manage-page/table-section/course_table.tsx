@@ -13,22 +13,47 @@ import {
 } from "@/components/ui/dialog";
 import ManageCourseForm from "./manage_course_form";
 import { useState, useEffect } from "react";
-import getCookie from "@/util/getCookie";
 import CourseCardSkeleton from "./course_card_skeleton";
+import { Cookie } from "@/utils/response";
+import getCookies from "@/utils/getCookie";
 
 const CourseTable = () => {
+  const axios = require("axios").default;
   const [courseData, setCourseData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const userId = document.cookie.split("; ")[0].split("=")[1];
+
   useEffect(() => {
-    console.log(userId);
-    fetch(
+    getCookies().then(async (cookie: Cookie) => {
+      console.log(cookie);
+      const courseResponse = await axios.get(
+        "http://localhost:3001/api/course",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: cookie.UserId,
+          },
+          params: {
+            courseId: "",
+            searchKey: "",
+            courseCat: "All",
+            teacherName: "",
+          },
+        }
+      );
+
+      console.log(courseResponse.data);
+      setCourseData(courseResponse.data);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
+    });
+    /* fetch(
       `http://localhost:3001/api/course?courseId=&searchKey=&courseCat=All&teacherName=`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          authorization: `${userId}`,
+          authorization: `${4}`,
         },
       }
     ).then((res) => {
@@ -41,13 +66,12 @@ const CourseTable = () => {
         res.text().then((json) => {
           const resJSON = JSON.parse(json);
           setCourseData(resJSON);
-          console.log(resJSON);
           setTimeout(() => {
             setIsLoading(false);
           }, 500);
         });
       }
-    });
+    }); */
   }, []);
   return (
     <div id="table" className="mt-4 rounded-md border p-4">

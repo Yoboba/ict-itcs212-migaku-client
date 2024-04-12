@@ -50,7 +50,7 @@ export default function LoginSection() {
         });
       } else {
         toast({
-          title: "Login Successed",
+          title: "Logged in Successfully",
           description: `对了！！！！`,
         });
         router.replace("/");

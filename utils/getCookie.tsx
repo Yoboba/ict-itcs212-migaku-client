@@ -1,10 +1,22 @@
-export default function getCookie() {
-  const cookies = document.cookie.split("; ");
-  const cookieMap: { [key: string]: string } = {};
-  cookies.forEach((cookie) => {
-    const [name, value] = cookie.split("=");
-    cookieMap[name] = value;
-  });
+import { BaseResponse, Cookie } from "./response";
 
-  return cookieMap;
+const axios = require("axios").default;
+export default async function getCookies() {
+  const emptyCookies: Cookie = {
+    Role: "",
+    UserId: "",
+  };
+
+  try {
+    const getCookieResponse: BaseResponse = await axios.get("/api/cookies");
+    if (getCookieResponse.status === 200) {
+      const cookies: Cookie = getCookieResponse.data.data;
+      return cookies;
+    } else {
+      return emptyCookies;
+    }
+  } catch (error) {
+    console.log(error);
+    return emptyCookies;
+  }
 }
