@@ -17,6 +17,7 @@ export function middleware(request: NextRequest) {
     if (cookieUserId && cookieUserRole) {
       if (cookieUserRole.value !== "Teacher") {
         console.log("role rejected");
+        return NextResponse.rewrite(new URL("/", request.url));
       }
       return NextResponse.next();
     }
