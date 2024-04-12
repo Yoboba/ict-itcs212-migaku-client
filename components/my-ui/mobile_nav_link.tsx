@@ -4,7 +4,6 @@ import { IconMenu2, IconX } from "@tabler/icons-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "../ui/button";
-// import { CookieResponse } from "@/utils/response";
 
 export default function MobileNavLink() {
   const [isOpen, setIsOpen] = useState(false);
