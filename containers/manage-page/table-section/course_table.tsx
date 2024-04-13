@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation";
 const CourseTable = () => {
   const axios = require("axios").default;
   const router = useRouter();
-  const [courseData, setCourseData] = useState();
+  const [courseData, setCourseData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   async function fetchCookie() {
@@ -62,66 +62,13 @@ const CourseTable = () => {
             },
           }
         );
-
+        console.log(courseResponse.data);
         setCourseData(courseResponse.data);
         setTimeout(() => {
           setIsLoading(false);
         }, 500);
       }
     });
-    /* getCookies().then(async (cookie: Cookie) => {
-      console.log(cookie);
-      if (!cookie.Role || !cookie.UserId) {
-        router.replace("/unauthorized");
-        router.refresh();
-      } else {
-        const courseResponse = await axios.get(
-          "http://localhost:3001/api/course",
-          {
-            headers: {
-              "Content-Type": "application/json",
-              authorization: cookie.UserId,
-            },
-            params: {
-              courseId: "",
-              searchKey: "",
-              courseCat: "All",
-              teacherName: "",
-            },
-          }
-        );
-
-        setCourseData(courseResponse.data);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 500);
-      }
-    }); */
-    /* fetch(
-      `http://localhost:3001/api/course?courseId=&searchKey=&courseCat=All&teacherName=`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `${4}`,
-        },
-      }
-    ).then((res) => {
-      if (res.status !== 200) {
-        res.text().then((json) => {
-          const resJSON = JSON.parse(json);
-          console.log(resJSON);
-        });
-      } else {
-        res.text().then((json) => {
-          const resJSON = JSON.parse(json);
-          setCourseData(resJSON);
-          setTimeout(() => {
-            setIsLoading(false);
-          }, 500);
-        });
-      }
-    }); */
   }, []);
   return (
     <div id="table" className="mt-4 rounded-md border p-4">
