@@ -14,39 +14,89 @@ import {
 import ManageCourseForm from "./manage_course_form";
 import { useState, useEffect } from "react";
 import CourseCardSkeleton from "./course_card_skeleton";
-import { Cookie } from "@/utils/response";
-import getCookies from "@/utils/getCookie";
+import { useRouter } from "next/navigation";
 
 const CourseTable = () => {
   const axios = require("axios").default;
+  const router = useRouter();
   const [courseData, setCourseData] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    getCookies().then(async (cookie: Cookie) => {
-      console.log(cookie);
-      const courseResponse = await axios.get(
-        "http://localhost:3001/api/course",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            authorization: cookie.UserId,
-          },
-          params: {
-            courseId: "",
-            searchKey: "",
-            courseCat: "All",
-            teacherName: "",
-          },
-        }
-      );
+  async function fetchCookie() {
+    const response = await axios.get("http://localhost:3000/api/cookies");
+    const data = response.data;
+    const userId = data?.cookie[0]?.value;
+    const userRole = data?.cookie[1]?.value;
 
-      console.log(courseResponse.data);
-      setCourseData(courseResponse.data);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
+    if (data.cookie.length === 0 || userRole !== "Teacher") {
+      return {
+        userRole: "",
+        userId: "",
+      };
+    } else {
+      return {
+        userRole,
+        userId,
+      };
+    }
+  }
+
+  useEffect(() => {
+    fetchCookie().then(async (cookie) => {
+      if (!cookie.userRole || !cookie.userId) {
+        router.replace("/unauthorized");
+        router.refresh();
+      } else {
+        const courseResponse = await axios.get(
+          "http://localhost:3001/api/course",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              authorization: cookie.userId,
+            },
+            params: {
+              courseId: "",
+              searchKey: "",
+              courseCat: "All",
+              teacherName: "",
+            },
+          }
+        );
+
+        setCourseData(courseResponse.data);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
+      }
     });
+    /* getCookies().then(async (cookie: Cookie) => {
+      console.log(cookie);
+      if (!cookie.Role || !cookie.UserId) {
+        router.replace("/unauthorized");
+        router.refresh();
+      } else {
+        const courseResponse = await axios.get(
+          "http://localhost:3001/api/course",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              authorization: cookie.UserId,
+            },
+            params: {
+              courseId: "",
+              searchKey: "",
+              courseCat: "All",
+              teacherName: "",
+            },
+          }
+        );
+
+        setCourseData(courseResponse.data);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
+      }
+    }); */
     /* fetch(
       `http://localhost:3001/api/course?courseId=&searchKey=&courseCat=All&teacherName=`,
       {
