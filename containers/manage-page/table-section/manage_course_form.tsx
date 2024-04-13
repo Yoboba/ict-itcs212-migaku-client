@@ -42,7 +42,7 @@ const formSchema = z.object({
     .min(1, {
       message: "Must not be blank",
     })
-    .refine((value) => !/[a-z]/.test(value), "Must be a number.")
+    .refine((value) => /[0-9]/.test(value), "Must be a number.")
     .refine((value) => parseInt(value) >= 0, "Cannot accept negative values."),
   status: z.string(),
   courseDuration: z
@@ -52,15 +52,15 @@ const formSchema = z.object({
     .min(1, {
       message: "Must not be blank",
     })
-    .refine((value) => !/[a-z]/.test(value), "Must be a number.")
+    .refine((value) => /[0-9]/.test(value), "Must be a number.")
     .refine((value) => parseInt(value) >= 0, "Cannot accept negative values."),
   rating: z.string(),
   courseCode: z
     .string()
-    .length(4, {
-      message: "Must be 4 characters.",
+    .length(3, {
+      message: "Must be 3 characters.",
     })
-    .refine((value) => !/[a-z]/.test(value), "Must be a number."),
+    .refine((value) => /[0-9]/.test(value), "Must be a number."),
 });
 
 type ManageCourseFormProps = {
@@ -92,7 +92,7 @@ const ManageCourseForm = ({ course, method }: ManageCourseFormProps) => {
       courseName: `${course ? course.courseName : ""}`,
       courseDes: `${course ? course.courseDes : ""}`,
       courseCat: `${course ? course.courseCat : "IT"}`,
-      courseCode: `${course ? course.courseCode.slice(-4) : "0000"}`,
+      courseCode: `${course ? course.courseCode.slice(-3) : "000"}`,
       courseDuration: `${course ? course.courseDuration : "0"}`,
       status: `${course ? course.status.data[0] : "0"}`,
       price: `${course ? course.price : "0"}`,
