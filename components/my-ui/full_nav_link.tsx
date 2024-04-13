@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { getCookie } from "@/utils/cookie";
+import { LogOutButton } from "./log_out_button";
 
 export default function FullNavLink() {
   return (
@@ -16,7 +17,7 @@ export default function FullNavLink() {
         getCookie("user_role") ? (
           <div className="flex items-center gap-8">
             <Button variant="default">Manage</Button>
-            <Button variant="default">Log Out</Button>
+            <LogOutButton />
           </div>
         ) : (
           <Button variant="default">Log Out</Button>

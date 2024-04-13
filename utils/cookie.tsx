@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 
 export function createCookie(cookieName: string, userId: string) {
   const now = new Date();
-  const expirationTime = new Date(now.getTime() + 10 * 1000); // <- 10 seconds from now
+  const expirationTime = new Date(now.getTime() + 5 * 60 * 1000); // <- 10 seconds from now
   cookies().set({
     name: cookieName,
     value: userId,
@@ -18,4 +18,8 @@ export function getCookie(cookieName: string) {
   } else {
     return null;
   }
+}
+
+export function deleteCookie(cookieName: string) {
+  cookies().delete(cookieName);
 }
