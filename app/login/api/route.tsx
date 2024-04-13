@@ -1,10 +1,10 @@
 import { BaseResponse, LoginResponse } from "@/utils/response";
 import { NextRequest, NextResponse } from "next/server";
-import { createCookie } from "@/utils/cookie";
+import { createCookie, deleteCookie, getCookie } from "@/utils/cookie";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const responseFormat: BaseResponse = {
+  const responseJson: BaseResponse = {
     status: 0,
     message: "",
     data: null,
@@ -21,20 +21,38 @@ export async function POST(req: NextRequest) {
 
     if (response.ok) {
       const json: LoginResponse = await response.json();
-      responseFormat.status = 200;
-      responseFormat.message = "Success";
-      responseFormat.data = json;
+      responseJson.status = 200;
+      responseJson.message = "Success";
+      responseJson.data = json;
       createCookie("user_id", json.UserId);
       createCookie("user_role", json.Role);
     } else {
-      responseFormat.status = response.status;
-      responseFormat.message = "Invalid Username or Password";
+      responseJson.status = response.status;
+      responseJson.message = "Invalid Username or Password";
     }
   } catch (error) {
     console.error("Error occurred:", error);
-    responseFormat.status = 500;
-    responseFormat.message = "Internal Server Error";
+    responseJson.status = 500;
+    responseJson.message = "Internal Server Error";
   }
 
-  return NextResponse.json(responseFormat);
+  return NextResponse.json(responseJson);
+}
+
+export async function DELETE() {
+  const responseJson: BaseResponse = {
+    status: 0,
+    message: "",
+    data: null,
+  };
+  const cookieUserId = getCookie("user_id");
+  const cookieUserRole = getCookie("user_role");
+
+  if (cookieUserId && cookieUserRole) {
+    deleteCookie(cookieUserId.name);
+    deleteCookie(cookieUserRole.name);
+    responseJson.status = 200;
+    responseJson.message = "Log out successfully";
+  }
+  return NextResponse.json(responseJson);
 }

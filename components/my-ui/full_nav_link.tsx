@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { getCookie } from "@/utils/cookie";
+import { LogOutButton } from "./log_out_button";
 
 export default function FullNavLink() {
   return (
@@ -18,7 +19,7 @@ export default function FullNavLink() {
             <Link href="/manage">
               <Button variant="default">Manage</Button>
             </Link>
-            <Button variant="default">Log Out</Button>
+            <LogOutButton />
           </div>
         ) : (
           <Button variant="default">Log Out</Button>
