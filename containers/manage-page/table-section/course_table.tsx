@@ -15,31 +15,13 @@ import ManageCourseForm from "./manage_course_form";
 import { useState, useEffect } from "react";
 import CourseCardSkeleton from "./course_card_skeleton";
 import { useRouter } from "next/navigation";
+import fetchCookie from "@/utils/fetchCookie";
 
 const CourseTable = () => {
   const axios = require("axios").default;
   const router = useRouter();
   const [courseData, setCourseData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  async function fetchCookie() {
-    const response = await axios.get("http://localhost:3000/api/cookies");
-    const data = response.data;
-    const userId = data?.cookie[0]?.value;
-    const userRole = data?.cookie[1]?.value;
-
-    if (data.cookie.length === 0 || userRole !== "Teacher") {
-      return {
-        userRole: "",
-        userId: "",
-      };
-    } else {
-      return {
-        userRole,
-        userId,
-      };
-    }
-  }
 
   useEffect(() => {
     fetchCookie().then(async (cookie) => {

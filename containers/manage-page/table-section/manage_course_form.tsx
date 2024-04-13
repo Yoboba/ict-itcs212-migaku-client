@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "../../../components/ui/button";
+import { useState } from "react";
 
 const formSchema = z.object({
   courseName: z.string().min(1, {
@@ -54,6 +55,12 @@ const formSchema = z.object({
     .refine((value) => !/[a-z]/.test(value), "Must be a number.")
     .refine((value) => parseInt(value) >= 0, "Cannot accept negative values."),
   rating: z.string(),
+  courseCode: z
+    .string()
+    .length(4, {
+      message: "Must be 4 characters.",
+    })
+    .refine((value) => !/[a-z]/.test(value), "Must be a number."),
 });
 
 type ManageCourseFormProps = {
@@ -76,6 +83,8 @@ type ManageCourseFormProps = {
 };
 
 const ManageCourseForm = ({ course, method }: ManageCourseFormProps) => {
+  const axios = require("axios").default;
+  const [isProcessing, setIsProcessing] = useState(false);
   const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -83,6 +92,7 @@ const ManageCourseForm = ({ course, method }: ManageCourseFormProps) => {
       courseName: `${course ? course.courseName : ""}`,
       courseDes: `${course ? course.courseDes : ""}`,
       courseCat: `${course ? course.courseCat : "IT"}`,
+      courseCode: `${course ? course.courseCode.slice(-4) : "0000"}`,
       courseDuration: `${course ? course.courseDuration : "0"}`,
       status: `${course ? course.status.data[0] : "0"}`,
       price: `${course ? course.price : "0"}`,
@@ -94,6 +104,8 @@ const ManageCourseForm = ({ course, method }: ManageCourseFormProps) => {
     const data = {
       ...values,
       courseId: course?.courseId,
+      courseCode: values.courseCat + values.courseCode,
+      rating: parseInt(values.rating),
       price: parseInt(values.price),
       status: values.status === "0" ? 0 : 1,
     };
@@ -278,34 +290,57 @@ const ManageCourseForm = ({ course, method }: ManageCourseFormProps) => {
                 />
               </div>
             </div>
-            <div id="course-price-form" className="grid w-full gap-1.5">
-              <Label htmlFor="course-price" className="">
-                Course Price <b>(THB)</b>{" "}
-                <span className="text-red-500">*</span>
-              </Label>
-              <FormField
-                control={form.control}
-                name="price"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <div className="relative">
-                        <IconCurrencyBaht
-                          size={24}
-                          className="absolute left-1 top-2"
-                        />
+            <div className="flex gap-2">
+              <div id="course-price-form" className="grid w-full gap-1.5">
+                <Label htmlFor="course-price" className="">
+                  Course Price <b>(THB)</b>{" "}
+                  <span className="text-red-500">*</span>
+                </Label>
+                <FormField
+                  control={form.control}
+                  name="price"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <div className="relative">
+                          <IconCurrencyBaht
+                            size={24}
+                            className="absolute left-1 top-2"
+                          />
+                          <Input
+                            id="price"
+                            placeholder="10000"
+                            className={`col-span-3 pl-8 ${form.formState.errors.price ? "border-red-500" : ""}`}
+                            {...field}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div id="course-code-form" className="grid w-full gap-1.5">
+                <Label htmlFor="course-price" className="">
+                  Course Code <span className="text-red-500">*</span>
+                </Label>
+                <FormField
+                  control={form.control}
+                  name="courseCode"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
                         <Input
-                          id="price"
-                          placeholder="10000"
-                          className={`col-span-3 pl-8 ${form.formState.errors.price ? "border-red-500" : ""}`}
+                          id="courseCode"
+                          className={`col-span-3 ${form.formState.errors.courseCode ? "border-red-500" : ""}`}
                           {...field}
                         />
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
           </div>
         </div>
