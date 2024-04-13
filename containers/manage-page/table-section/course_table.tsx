@@ -99,7 +99,7 @@ const CourseTable = () => {
                   asterisk (<span className="text-red-500">*</span>).
                 </DialogDescription>
               </DialogHeader>
-              <ManageCourseForm />
+              <ManageCourseForm method="POST" />
             </DialogContent>
           </Dialog>
         </div>

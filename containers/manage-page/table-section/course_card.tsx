@@ -39,9 +39,12 @@ type CourseProps = {
     courseName: string;
     courseDes: string;
     price: number;
-    status: string;
+    status: {
+      data: number[];
+      type: string;
+    };
     rating: number;
-    duration: number;
+    courseDuration: number;
     imgSrc?: string;
   };
   variant: string;
@@ -80,7 +83,7 @@ const CourseCard = ({ course, variant }: CourseProps) => {
           Please make changes to your course as you seem appropriate.
         </DialogDescription>
       </DialogHeader>
-      <ManageCourseForm course={course} />
+      <ManageCourseForm method="PUT" course={course} />
     </>
   );
   const deleteDialog = (

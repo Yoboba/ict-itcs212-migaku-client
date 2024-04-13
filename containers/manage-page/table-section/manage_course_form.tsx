@@ -44,6 +44,16 @@ const formSchema = z.object({
     .refine((value) => !/[a-z]/.test(value), "Must be a number.")
     .refine((value) => parseInt(value) >= 0, "Cannot accept negative values."),
   status: z.string(),
+  courseDuration: z
+    .string({
+      required_error: "Must enter a valid course duration",
+    })
+    .min(1, {
+      message: "Must not be blank",
+    })
+    .refine((value) => !/[a-z]/.test(value), "Must be a number.")
+    .refine((value) => parseInt(value) >= 0, "Cannot accept negative values."),
+  rating: z.string(),
 });
 
 type ManageCourseFormProps = {
@@ -53,13 +63,19 @@ type ManageCourseFormProps = {
     courseCat: string;
     courseName: string;
     courseDes: string;
+    courseDuration: number;
     price: number;
-    status: string;
+    status: {
+      data: number[];
+      type: string;
+    };
+    rating: number;
     imgSrc?: string;
   };
+  method: "POST" | "PUT";
 };
 
-const ManageCourseForm = ({ course }: ManageCourseFormProps) => {
+const ManageCourseForm = ({ course, method }: ManageCourseFormProps) => {
   const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -67,14 +83,17 @@ const ManageCourseForm = ({ course }: ManageCourseFormProps) => {
       courseName: `${course ? course.courseName : ""}`,
       courseDes: `${course ? course.courseDes : ""}`,
       courseCat: `${course ? course.courseCat : "IT"}`,
-      status: `${course ? course.status : "0"}`,
-      price: `${course ? course.price : 0}`,
+      courseDuration: `${course ? course.courseDuration : "0"}`,
+      status: `${course ? course.status.data[0] : "0"}`,
+      price: `${course ? course.price : "0"}`,
+      rating: `${course ? course.rating : "1"}`,
     },
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const data = {
       ...values,
+      courseId: course?.courseId,
       price: parseInt(values.price),
       status: values.status === "0" ? 0 : 1,
     };
@@ -194,6 +213,62 @@ const ManageCourseForm = ({ course }: ManageCourseFormProps) => {
                           <SelectGroup>
                             <SelectItem value="0">Inactive</SelectItem>
                             <SelectItem value="1">Active</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <div id="course-duration-form" className="grid w-full gap-1.5">
+                <Label htmlFor="course-price" className="">
+                  Course Duration <span className="text-red-500">*</span>
+                </Label>
+                <FormField
+                  control={form.control}
+                  name="courseDuration"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          id="courseDuration"
+                          className={`col-span-3 ${form.formState.errors.courseDuration ? "border-red-500" : ""}`}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div id="course-rating-form" className="grid w-full gap-1.5">
+                <Label htmlFor="select-status" className="">
+                  Course Rating <span className="text-red-500">*</span>
+                </Label>
+                <FormField
+                  control={form.control}
+                  name="rating"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Rating" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="1">1 (Very Easy)</SelectItem>
+                            <SelectItem value="2">2 - (Easy)</SelectItem>
+                            <SelectItem value="3">3 - (Average)</SelectItem>
+                            <SelectItem value="4">4 - (Difficult)</SelectItem>
+                            <SelectItem value="5">5 - (Expert)</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
