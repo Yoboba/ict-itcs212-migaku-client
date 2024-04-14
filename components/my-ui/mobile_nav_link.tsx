@@ -42,7 +42,6 @@ function DropDownNavLink() {
           Manage
         </Button>
       </Link>
-      <Button variant="default" className="w-fit">
       <LogOutButton />
     </div>
   );
