@@ -13,9 +13,11 @@ export default function FullNavLink() {
         About Us
       </Link>
       {getCookie("user_id") ? (
-        getCookie("user_role") ? (
+        getCookie("user_role")?.value === "Teacher" ? (
           <div className="flex items-center gap-8">
-            <Button variant="default">Manage</Button>
+            <Link href="/manage">
+              <Button variant="default">Manage</Button>
+            </Link>
             <Button variant="default">Log Out</Button>
           </div>
         ) : (

@@ -1,7 +1,7 @@
-import LoginSection from "@/containers/Login-Page/login-section";
-import ContentSection from "@/containers/Login-Page/content-section";
+import LoginSection from "@/containers/login-page/login-section";
+import ContentSection from "@/containers/login-page/content-section";
 
-export default async function LoginPage() {
+export default function LoginPage() {
   return (
     <div className="flex h-screen w-full">
       <ContentSection />
