@@ -44,7 +44,6 @@ const CourseTable = () => {
             },
           }
         );
-        console.log(courseResponse.data);
         setCourseData(courseResponse.data);
         setTimeout(() => {
           setIsLoading(false);

@@ -24,6 +24,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "../../../components/ui/button";
 import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import fetchCookie from "@/utils/fetchCookie";
 
 const formSchema = z.object({
   courseName: z.string().min(1, {
@@ -85,6 +87,7 @@ type ManageCourseFormProps = {
 const ManageCourseForm = ({ course, method }: ManageCourseFormProps) => {
   const axios = require("axios").default;
   const [isProcessing, setIsProcessing] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -103,14 +106,44 @@ const ManageCourseForm = ({ course, method }: ManageCourseFormProps) => {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const data = {
       ...values,
-      courseId: course?.courseId,
       courseCode: values.courseCat + values.courseCode,
       rating: parseInt(values.rating),
       price: parseInt(values.price),
       status: values.status === "0" ? 0 : 1,
     };
 
-    console.log(data);
+    setIsProcessing(true);
+    if (method === "PUT") {
+      fetchCookie().then(async (cookie) => {
+        axios
+          .post("http://localhost:3001/api/course", {
+            headers: {
+              "Content-Type": "application/json",
+              authorization: cookie.userId,
+            },
+            body: data,
+            params: {
+              courseId: course?.courseId,
+            },
+          })
+          .then(async (res) => {
+            const response = await res.json();
+            if (response.status !== 200) {
+              toast({
+                variant: "destructive",
+                title: "Failed to save changes.",
+                description: `Server responded with: ${response.message}`,
+              });
+            } else {
+              toast({
+                title: "Saved changes successfully.",
+                description: `Server responded with: ${response.message}`,
+              });
+              setIsProcessing(false);
+            }
+          });
+      });
+    }
 
     toast({
       title: "Form data has been sent.",
@@ -344,7 +377,8 @@ const ManageCourseForm = ({ course, method }: ManageCourseFormProps) => {
             </div>
           </div>
         </div>
-        <Button type="submit" className="mt-4 w-full">
+        <Button type="submit" className="mt-4 w-full" disabled={isProcessing}>
+          {isProcessing && <Loader2 className="mr-4 size-4 animate-spin" />}
           {course ? "Save Changes" : "Create New Course"}
         </Button>
       </form>
