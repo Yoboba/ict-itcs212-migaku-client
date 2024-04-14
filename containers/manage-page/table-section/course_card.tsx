@@ -30,6 +30,8 @@ import MAImg from "@/public/courseimages/370112.jpg";
 import SCImg from "@/public/courseimages/372560.jpg";
 import LGImg from "@/public/courseimages/373678.jpg";
 import SOImg from "@/public/courseimages/373935.jpg";
+import fetchCookie from "@/utils/fetchCookie";
+import { toast } from "@/components/ui/use-toast";
 
 type CourseProps = {
   course: {
@@ -48,6 +50,7 @@ type CourseProps = {
     imgSrc?: string;
   };
   variant: string;
+  onDone: () => void;
 };
 
 type CategoryMap = {
@@ -74,7 +77,47 @@ const imageMap: ImageMap = {
   SO: SOImg.src,
 };
 
-const CourseCard = ({ course, variant }: CourseProps) => {
+const CourseCard = ({ course, variant, onDone }: CourseProps) => {
+  const axios = require("axios").default;
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [dialogState, setDialogState] = useState("");
+  async function onDeleteSubmit() {
+    const cookie = await fetchCookie();
+    axios
+      .delete("http://localhost:3001/api/course", {
+        headers: {
+          authorization: cookie.userId,
+        },
+        params: {
+          courseId: course.courseId,
+        },
+      })
+      .then(async (res) => {
+        console.log(res);
+        if (res.status !== 200) {
+          toast({
+            variant: "destructive",
+            title: "Failed to delete course.",
+            description: `Server responded with: ${res.data.Message}`,
+          });
+        } else {
+          toast({
+            title: "Course Deleted.",
+            description: `Server responded with: ${res.data.Message}`,
+          });
+          setIsProcessing(false);
+          onDone();
+        }
+      })
+      .catch((error) => {
+        toast({
+          variant: "destructive",
+          title: "Unexpected Error",
+          description: `Server responded with: ${error}`,
+        });
+        setIsProcessing(false);
+      });
+  }
   const editDialog = (
     <>
       <DialogHeader>
@@ -83,7 +126,7 @@ const CourseCard = ({ course, variant }: CourseProps) => {
           Please make changes to your course as you seem appropriate.
         </DialogDescription>
       </DialogHeader>
-      <ManageCourseForm method="PUT" course={course} />
+      <ManageCourseForm method="put" course={course} onDone={onDone} />
     </>
   );
   const deleteDialog = (
@@ -95,10 +138,16 @@ const CourseCard = ({ course, variant }: CourseProps) => {
           and remove your data from our servers.
         </DialogDescription>
       </DialogHeader>
-      <Button variant="destructive">Delete</Button>
+      <Button
+        variant="destructive"
+        onClick={onDeleteSubmit}
+        disabled={isProcessing}
+      >
+        Delete
+      </Button>
     </>
   );
-  const [dialogState, setDialogState] = useState("edit");
+
   let imgSrc = imageMap[course.courseCat];
 
   if (course.imgSrc) {

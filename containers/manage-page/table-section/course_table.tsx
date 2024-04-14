@@ -22,6 +22,11 @@ const CourseTable = () => {
   const router = useRouter();
   const [courseData, setCourseData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [shouldRefetch, setShouldRefetch] = useState(false);
+  const toggleRefetch = () => {
+    setShouldRefetch((prevState) => !prevState);
+    console.log("called toggleRefetch");
+  };
 
   useEffect(() => {
     fetchCookie().then(async (cookie) => {
@@ -50,7 +55,7 @@ const CourseTable = () => {
         }, 500);
       }
     });
-  }, []);
+  }, [shouldRefetch]);
   return (
     <div id="table" className="mt-4 rounded-md border p-4">
       <div id="table-container w-full flex-col items-center">
@@ -80,7 +85,7 @@ const CourseTable = () => {
                   asterisk (<span className="text-red-500">*</span>).
                 </DialogDescription>
               </DialogHeader>
-              <ManageCourseForm method="POST" />
+              <ManageCourseForm method="post" onDone={toggleRefetch} />
             </DialogContent>
           </Dialog>
         </div>
@@ -90,7 +95,12 @@ const CourseTable = () => {
         >
           {!isLoading
             ? courseData.map((item, index: number) => (
-                <CourseCard variant="manage" key={index} course={item} />
+                <CourseCard
+                  variant="manage"
+                  key={index}
+                  course={item}
+                  onDone={toggleRefetch}
+                />
               ))
             : Array.from({ length: 7 }, (_, index) => (
                 <CourseCardSkeleton key={index} />

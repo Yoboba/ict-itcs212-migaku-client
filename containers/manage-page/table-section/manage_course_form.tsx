@@ -81,13 +81,17 @@ type ManageCourseFormProps = {
     rating: number;
     imgSrc?: string;
   };
-  method: "POST" | "PUT";
+  method: "post" | "put";
+  onDone: () => void;
 };
 
-const ManageCourseForm = ({ course, method }: ManageCourseFormProps) => {
+const ManageCourseForm = ({
+  course,
+  method,
+  onDone,
+}: ManageCourseFormProps) => {
   const axios = require("axios").default;
   const [isProcessing, setIsProcessing] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
   const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -113,42 +117,89 @@ const ManageCourseForm = ({ course, method }: ManageCourseFormProps) => {
     };
 
     setIsProcessing(true);
-    if (method === "PUT") {
-      fetchCookie().then(async (cookie) => {
+
+    fetchCookie().then(async (cookie) => {
+      if (method === "put") {
         axios
-          .post("http://localhost:3001/api/course", {
+          .put("http://localhost:3001/api/course", data, {
             headers: {
               "Content-Type": "application/json",
               authorization: cookie.userId,
             },
-            body: data,
             params: {
               courseId: course?.courseId,
             },
           })
           .then(async (res) => {
-            const response = await res.json();
-            if (response.status !== 200) {
+            console.log(res);
+            if (res.status !== 200) {
               toast({
                 variant: "destructive",
                 title: "Failed to save changes.",
-                description: `Server responded with: ${response.message}`,
+                description: `Server responded with: ${res.data.Message}`,
               });
             } else {
               toast({
                 title: "Saved changes successfully.",
-                description: `Server responded with: ${response.message}`,
+                description: `Server responded with: ${res.data.Message}`,
               });
               setIsProcessing(false);
+              onDone();
             }
+          })
+          .catch((error) => {
+            toast({
+              variant: "destructive",
+              title: "Unexpected Error",
+              description: `Server responded with: ${error}`,
+            });
+            setIsProcessing(false);
           });
-      });
-    }
+      } else if (method === "post") {
+        console.log({ ...data, teacherId: cookie.userId });
+        axios
+          .post(
+            "http://localhost:3001/api/course",
+            { ...data, TeacherId: cookie.userId },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                authorization: cookie.userId,
+              },
+            }
+          )
+          .then(async (res) => {
+            console.log(res);
+            if (res.status !== 201) {
+              toast({
+                variant: "destructive",
+                title: "Failed to create course.",
+                description: `Server responded with: ${res.data.Message}`,
+              });
+            } else {
+              toast({
+                title: "Course Created.",
+                description: `Server responded with: ${res.data.Message}`,
+              });
+              setIsProcessing(false);
+              onDone();
+            }
+          })
+          .catch((error) => {
+            toast({
+              variant: "destructive",
+              title: "Unexpected Error",
+              description: `Server responded with: ${error}`,
+            });
+            setIsProcessing(false);
+          });
+      }
+    });
 
-    toast({
+    /* toast({
       title: "Form data has been sent.",
       description: `${JSON.stringify(data, null, 2)}`,
-    });
+    }); */
   };
 
   return (
