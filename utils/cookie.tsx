@@ -19,3 +19,7 @@ export function getCookie(cookieName: string) {
     return null;
   }
 }
+
+export function deleteCookie(cookieName: string) {
+  cookies().delete(cookieName);
+}
