@@ -1,6 +1,6 @@
 import { BaseResponse, LoginResponse } from "@/utils/response";
 import { NextRequest, NextResponse } from "next/server";
-import { createCookie, deleteCookie, getCookie } from "@/utils/cookie";
+import { createCookie } from "@/utils/cookie";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -36,23 +36,5 @@ export async function POST(req: NextRequest) {
     responseJson.message = "Internal Server Error";
   }
 
-  return NextResponse.json(responseJson);
-}
-
-export async function DELETE() {
-  const responseJson: BaseResponse = {
-    status: 0,
-    message: "",
-    data: null,
-  };
-  const cookieUserId = getCookie("user_id");
-  const cookieUserRole = getCookie("user_role");
-
-  if (cookieUserId && cookieUserRole) {
-    deleteCookie(cookieUserId.name);
-    deleteCookie(cookieUserRole.name);
-    responseJson.status = 200;
-    responseJson.message = "Log out successfully";
-  }
   return NextResponse.json(responseJson);
 }
