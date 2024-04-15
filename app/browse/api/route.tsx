@@ -14,6 +14,7 @@ export async function GET(request: NextRequest) {
   const courseCat = request.nextUrl.searchParams.get("courseCat");
   const teacherName = request.nextUrl.searchParams.get("teacherName");
 
+  console.log("--------fetch course--------");
   console.log("courseId = " + courseId);
   console.log("searchKey = " + searchKey);
   console.log("courseCat = " + courseCat);
