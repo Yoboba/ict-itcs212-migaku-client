@@ -17,7 +17,7 @@ export default function CourseDescriptionSection(
     courseDes: "",
     courseDuration: 0,
     price: 0,
-    TeacherId: 0,
+    teacherName: "",
     rating: 0,
     status: 0,
   });
