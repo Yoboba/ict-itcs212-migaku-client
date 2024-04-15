@@ -20,13 +20,15 @@ export default function CourseCard(props: CourseCardProps) {
     courseDes: "",
     courseDuration: 0,
     price: 0,
-    TeacherId: 0,
+    teacherName: "",
     rating: 0,
     status: 0,
   });
+
   useEffect(() => {
     fetchCourse();
   }, []);
+
   async function fetchCourse() {
     const response = await fetch(
       `/browse/api?courseId=${props.courseId}&searchKey=&courseCat=&teacherName=`
@@ -58,7 +60,7 @@ export default function CourseCard(props: CourseCardProps) {
           <div className="flex flex-col items-center gap-2 sm:items-start">
             <h2 className=" text-xl font-semibold">Instructor</h2>
             <Profile
-              name={"Thanachot"}
+              name={course.teacherName}
               role={"CTO at NOT FOR CHARITY,.Co.Ltd"}
               avatar={"https://github.com/shadcn.png"}
             />
