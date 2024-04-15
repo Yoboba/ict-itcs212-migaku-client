@@ -8,6 +8,7 @@ import AddToFavorite from "./add_to_favorite";
 import { useEffect, useState } from "react";
 
 interface CourseCardProps {
+interface CourseCardProps {
   courseId: number;
 }
 
