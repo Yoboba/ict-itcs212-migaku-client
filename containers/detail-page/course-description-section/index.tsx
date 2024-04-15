@@ -23,17 +23,17 @@ export default function CourseDescriptionSection(
   });
 
   useEffect(() => {
-    async function fetchCourseDescription() {
-      const response = await fetch(
-        `/browse/api?courseId=${props.courseId}&searchKey=&courseCat=&teacherName=`
-      );
-      const data = await response.json();
-      console.log(data);
-      setCourse(data.data[0]);
-    }
-    // use function
     fetchCourseDescription();
   }, []);
+
+  async function fetchCourseDescription() {
+    const response = await fetch(
+      `/browse/api?courseId=${props.courseId}&searchKey=&courseCat=&teacherName=`
+    );
+    const data = await response.json();
+    console.log(data);
+    setCourse(data.data[0]);
+  }
 
   return (
     <div className="flex h-full  flex-col gap-4 p-6 sm:flex-row sm:gap-10 sm:p-10">

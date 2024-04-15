@@ -8,6 +8,7 @@ import AddToFavorite from "./add_to_favorite";
 import { useEffect, useState } from "react";
 
 interface CourseCardProps {
+interface CourseCardProps {
   courseId: number;
 }
 
@@ -26,18 +27,17 @@ export default function CourseCard(props: CourseCardProps) {
   });
 
   useEffect(() => {
-    async function fetchCourse() {
-      const response = await fetch(
-        `/browse/api?courseId=${props.courseId}&searchKey=&courseCat=&teacherName=`
-      );
-      const data = await response.json();
-      console.log(data);
-      setCourse(data.data[0]);
-    }
-    // use function
     fetchCourse();
   }, []);
 
+  async function fetchCourse() {
+    const response = await fetch(
+      `/browse/api?courseId=${props.courseId}&searchKey=&courseCat=&teacherName=`
+    );
+    const data = await response.json();
+    console.log(data);
+    setCourse(data.data[0]);
+  }
   return (
     <main className="flex flex-col items-center justify-center gap-5 rounded-xl bg-white p-10 drop-shadow-xl sm:gap-10 md:flex-col lg:flex-row ">
       <Image
