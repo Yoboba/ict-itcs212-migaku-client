@@ -130,7 +130,7 @@ const ManageCourseForm = ({
               courseId: course?.courseId,
             },
           })
-          .then(async (res) => {
+          .then(async (res:any) => {
             console.log(res);
             if (res.status !== 200) {
               toast({
@@ -147,7 +147,7 @@ const ManageCourseForm = ({
               onDone();
             }
           })
-          .catch((error) => {
+          .catch((error:any) => {
             toast({
               variant: "destructive",
               title: "Unexpected Error",
@@ -168,7 +168,7 @@ const ManageCourseForm = ({
               },
             }
           )
-          .then(async (res) => {
+          .then(async (res:any) => {
             console.log(res);
             if (res.status !== 201) {
               toast({
@@ -185,7 +185,7 @@ const ManageCourseForm = ({
               onDone();
             }
           })
-          .catch((error) => {
+          .catch((error:any) => {
             toast({
               variant: "destructive",
               title: "Unexpected Error",
