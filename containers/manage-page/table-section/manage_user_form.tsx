@@ -24,8 +24,8 @@ import { Button } from "../../../components/ui/button"
 type User = {
     user: {
         userId: number
-        Firstname: string
-        Lastname: string
+        firstName: string
+        lastName: string
         Email: string
         username: string
         password: string
@@ -34,12 +34,12 @@ type User = {
 }
 
 const formSchema = z.object({
-    Firstname: z.string().min(1, {
+    firstName: z.string().min(1, {
         message: "First name cannot be blank."
     }).max(100, {
         message: "First name must not exceed 100 characters.",
     }),
-    Lastname: z.string().min(1, {
+    lastName: z.string().min(1, {
         message: "Last name cannot be blank."
     }).max(100, {
         message: "Last name must not exceed 100 characters.",
@@ -66,8 +66,8 @@ const ManageUserForm = ({user}: User) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            Firstname: `${user? user.Firstname : ''}`,
-            Lastname: `${user? user.Lastname : ''}`,
+            firstName: `${user? user.firstName : ''}`,
+            lastName: `${user? user.lastName : ''}`,
             Email: `${user? user.Email : ''}`,
             Username: `${user? user.username : ''}`,
             Password: `${user? user.password : ''}`,
@@ -98,12 +98,12 @@ const ManageUserForm = ({user}: User) => {
                         </Label>
                         <FormField 
                             control={form.control} 
-                            name="Firstname"
+                            name="firstName"
                             render={({field}) => (
                                 <FormItem>
                                     <FormControl>
                                         <Input placeholder="John" 
-                                            className={`col-span-3 ${form.formState.errors.Firstname ? 'border-red-500' : ''}`}
+                                            className={`col-span-3 ${form.formState.errors.firstName ? 'border-red-500' : ''}`}
                                             {...field} />
                                     </FormControl>
                                     <FormMessage />
@@ -117,12 +117,12 @@ const ManageUserForm = ({user}: User) => {
                         </Label>
                         <FormField 
                             control={form.control} 
-                            name="Lastname"
+                            name="lastName"
                             render={({field}) => (
                                 <FormItem>
                                     <FormControl>
                                         <Input placeholder="Wick" 
-                                            className={`col-span-3 ${form.formState.errors.Lastname ? 'border-red-500' : ''}`}
+                                            className={`col-span-3 ${form.formState.errors.lastName ? 'border-red-500' : ''}`}
                                             {...field} />
                                     </FormControl>
                                     <FormMessage />
@@ -170,7 +170,7 @@ const ManageUserForm = ({user}: User) => {
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
-                                                    <SelectItem value="Admin">Admin</SelectItem>
+                                                    <SelectItem value="Teacher">Teacher</SelectItem>
                                                     <SelectItem value="User">User</SelectItem>
                                                 </SelectContent>
                                             </Select>

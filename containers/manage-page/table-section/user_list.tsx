@@ -14,8 +14,8 @@ import ManageUserForm from "./manage_user_form";
 type User = {
     user: {
         userId: number
-        Firstname: string
-        Lastname: string
+        firstName: string
+        lastName: string
         Email: string
         username: string
         password: string
@@ -51,8 +51,8 @@ const UserList = ({user}: User) => {
     return (
         <TableRow>
             <TableCell className="text-center">{user.userId}</TableCell>
-            <TableCell>{user.Firstname}</TableCell>
-            <TableCell>{user.Lastname}</TableCell>
+            <TableCell>{user.firstName}</TableCell>
+            <TableCell>{user.lastName}</TableCell>
             <TableCell>{user.username}</TableCell>
             <TableCell className="text-center">{user.role}</TableCell>
             <Dialog>

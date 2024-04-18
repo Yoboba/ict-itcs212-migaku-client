@@ -17,6 +17,7 @@ import { Label } from "@radix-ui/react-dropdown-menu";
 import {
   IconFilterFilled,
   IconSearch,
+  IconSkull,
   IconStarFilled,
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
@@ -48,7 +49,7 @@ export default function Browse() {
               <IconFilterFilled size={25} className="ml-2 mt-1 text-black" />
             </CardTitle>
           </CardHeader>
-          <CardContent className="mx-4 border-b-2 border-gray-200">
+          {/* <CardContent className="mx-4 border-b-2 border-gray-200">
             <div className="text-xl font-semibold">Price Range</div>
             <SliderRange
               className="mt-4"
@@ -56,15 +57,15 @@ export default function Browse() {
               min={0}
               max={10000}
             />
-          </CardContent>
-          <CardContent className="mx-4 mt-4">
-            <div className="text-xl font-semibold">User Rating</div>
+          </CardContent> */}
+          <CardContent className="mx-4 border-t-2 border-gray-200">
+            <div className="text-xl font-semibold mt-4">Difficulty Rating</div>
             <div className="flex space-x-2">
               <Checkbox className="mt-4" defaultChecked />
               <div className="mt-2 text-lg font-semibold">{"> 4"}</div>
               <div className="mt-3 flex space-x-2">
                 {Array(4).fill(
-                  <IconStarFilled key="4s" size={20} className="text-c7" />
+                  <IconSkull stroke={2} />
                 )}
               </div>
             </div>
@@ -73,7 +74,7 @@ export default function Browse() {
               <div className="mt-2 text-lg font-semibold">{"> 3"}</div>
               <div className="mt-3 flex space-x-2">
                 {Array(3).fill(
-                  <IconStarFilled key="3s" size={20} className="text-c7" />
+                  <IconSkull stroke={2} />
                 )}
               </div>
             </div>
@@ -82,7 +83,7 @@ export default function Browse() {
               <div className="mt-2 text-lg font-semibold">{"> 2"}</div>
               <div className="mt-3 flex space-x-2">
                 {Array(2).fill(
-                  <IconStarFilled key="2s" size={20} className="text-c7" />
+                  <IconSkull stroke={2} />
                 )}
               </div>
             </div>
@@ -90,7 +91,7 @@ export default function Browse() {
               <Checkbox className="mt-4" defaultChecked />
               <div className="mt-2 text-lg font-semibold">{"> 1"}</div>
               <div className="mt-3 flex space-x-2">
-                <IconStarFilled key="1s" size={20} className="text-c7" />
+              <IconSkull stroke={2} />
               </div>
             </div>
           </CardContent>
