@@ -1,13 +1,12 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 'use client';
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import TableSearchBar from "./table_search_bar"
 import { Button } from "../../../components/ui/button"
 import { IconUserPlus } from '@tabler/icons-react'
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableHeader, TableBody, TableHead, TableRow } from "@/components/ui/table"
 import UserList from "./user_list"
-import { userData } from "../constants/mockdata"
 import {
 	Dialog,
 	DialogContent,
@@ -17,22 +16,55 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog"
 import ManageUserForm from "./manage_user_form";
+import { useRouter } from "next/navigation";
+import fetchCookie from "@/utils/fetchCookie";
 
 const UserTable = () => {
     const [viewState, setViewState] = useState('all');
+    const router = useRouter();
+    const [userData, setUserData] = useState([]);
+    const [ReFetch, setReFetch] = useState(false);
+
+    const toggleRefetch = () => {
+        setReFetch((prevState) => !prevState);
+        console.log("called toggleRefetch");
+      };
+
+    useEffect(() => {
+        fetchCookie().then(async (cookie) => {
+            if (!cookie.userRole || !cookie.userId || cookie.userRole != "Teacher") {
+              router.replace("/unauthorized");
+              router.refresh();
+            } else {
+                const userResponse = await fetch(
+                    "http://localhost:3001/api/user",
+                    {
+                      headers: {
+                        "Content-Type": "application/json",
+                        authorization: cookie.userId,
+                      },
+                      method: "GET"
+                    }
+                  );
+                  const data = await userResponse.json();
+                  console.log(data);
+                  setUserData(data);
+            }
+        })
+    },[ReFetch])
 
     function renderUserList() {
         if (viewState === 'all') {
             return userData;
-        }else if (viewState === 'admin') {
-            return userData.filter(user => user.role === 'Admin');
+        }else if (viewState === 'teacher') {
+            return userData.filter(user => user['role'] === 'Teacher');
         }else if (viewState === 'user') {
-            return userData.filter(user => user.role === 'User');
+            return userData.filter(user => user['role'] === 'User');
         }
     }
 
     return (
-        <div id="table" className="mt-4 rounded-md border">
+        <div id="table" className="my-4 rounded-md border">
                 <div id="table-container w-full flex-col items-center">
                     <div id="table-header" className="flex items-center justify-between space-x-2 p-4">
                         <TableSearchBar/>
@@ -53,13 +85,13 @@ const UserTable = () => {
                                 </DialogHeader>
                                 <ManageUserForm user={{
                                         userId: 0,
-                                        Firstname: "",
-                                        Lastname: "",
-                                        Email: "",
+                                        firstName: "",
+                                        lastName: "",
+                                        email: "",
                                         username: "",
                                         password: "",
                                         role: ""
-                                    }}/>
+                                    }} method="post" onDone={toggleRefetch}/>
                             </DialogContent>
                         </Dialog>
                     </div>
@@ -67,7 +99,7 @@ const UserTable = () => {
                     <Tabs defaultValue="all">
                         <TabsList className=''>
                             <TabsTrigger value="all" onClick={() => setViewState('all')}>All</TabsTrigger>
-                            <TabsTrigger value="admin" onClick={() => setViewState('admin')}>Admin</TabsTrigger>
+                            <TabsTrigger value="admin" onClick={() => setViewState('teacher')}>Teacher</TabsTrigger>
                             <TabsTrigger value="user" onClick={() => setViewState('user')}>User</TabsTrigger>
                         </TabsList>
                     </Tabs>
@@ -87,7 +119,7 @@ const UserTable = () => {
                         </TableHeader>
                         <TableBody>
                             {renderUserList()?.map((item, index) => (
-                                <UserList key={index} user={item} />
+                                <UserList key={index} user={item} onDone={toggleRefetch} />
                             ))}
                         </TableBody>
                     </Table>

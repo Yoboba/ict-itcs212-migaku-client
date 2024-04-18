@@ -20,71 +20,137 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "../../../components/ui/button"
+import fetchCookie from "@/utils/fetchCookie"
 
-type User = {
+type UserForm = {
     user: {
         userId: number
-        Firstname: string
-        Lastname: string
-        Email: string
+        firstName: string
+        lastName: string
+        email: string
         username: string
         password: string
         role: string
-    }
+    },
+    method: string,
+    onDone: () => void
 }
 
 const formSchema = z.object({
-    Firstname: z.string().min(1, {
+    firstName: z.string().min(1, {
         message: "First name cannot be blank."
     }).max(100, {
         message: "First name must not exceed 100 characters.",
     }),
-    Lastname: z.string().min(1, {
+    lastName: z.string().min(1, {
         message: "Last name cannot be blank."
     }).max(100, {
         message: "Last name must not exceed 100 characters.",
     }),
-    Email: z.string().min(1, {
+    email: z.string().min(1, {
         message: "Email cannot be blank."
     }).max(100, {
         message: "Email must not exceed 100 characters.",
     }),
-    Username: z.string().min(1, {
+    username: z.string().min(1, {
         message: "Username cannot be blank."
     }).max(100, {
         message: "Username must not exceed 100 characters.",
     }),
-    Password: z.string().min(1, {
+    password: z.string().min(1, {
         message: "Password cannot be blank."
     }),
-    Role: z.string()
+    role: z.string()
 })
 
-const ManageUserForm = ({user}: User) => {
+const ManageUserForm = ({user, method, onDone}: UserForm) => {
 
     const { toast } = useToast()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            Firstname: `${user? user.Firstname : ''}`,
-            Lastname: `${user? user.Lastname : ''}`,
-            Email: `${user? user.Email : ''}`,
-            Username: `${user? user.username : ''}`,
-            Password: `${user? user.password : ''}`,
-            Role: `${user? user.role : 'User'}`
+            firstName: `${user? user.firstName : ''}`,
+            lastName: `${user? user.lastName : ''}`,
+            email: `${user? user.email : ''}`,
+            username: `${user? user.username : ''}`,
+            password: `${user? atob(user.password) : ''}`,
+            role: `${user? user.role : 'User'}`
         }
     })
 
     const onSubmit = (values: z.infer<typeof formSchema>) => {
         const data = {
         ...values}
-        
-        console.log(data)
 
-        toast({
-            title: "Form data has been sent.",
-            description: `${JSON.stringify(data, null, 2)}`,
+        data.password = btoa(data.password);
+        
+        fetchCookie().then(async (cookie) => {
+            if (!cookie.userRole || !cookie.userId || cookie.userRole != "Teacher") {
+                toast({
+                    title: "Error",
+                    description: "You are not authorized to perform this action.",
+                })
+                return
+            } else {
+                if(method === "post")
+                    {
+                        const postRes = await fetch("http://localhost:3001/api/user", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                authorization: cookie.userId
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        if(postRes.status === 201)
+                        {
+                            toast({
+                                title: "User Created",
+                                description: `Server responded with: ${postRes.statusText}`,
+                            })
+                            onDone();
+                        }
+                        else
+                        {
+                            toast({
+                                title: "Error",
+                                description: `Server responded with: ${postRes.statusText}`,
+                            })
+                        }
+                    }
+                    else if(method === "put")
+                    {
+                        const putRes = await fetch(`http://localhost:3001/api/user?userId=${user?.userId}`, {
+                            method: "PUT",
+                            headers: {
+                                "Content-Type": "application/json",
+                                authorization: cookie.userId
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        if(putRes.status === 200)
+                        {
+                            toast({
+                                title: "User Updated",
+                                description: `Server responded with: ${putRes.statusText}`,
+                            })
+                            onDone();
+                        }
+                        else
+                        {
+                            toast({
+                                title: "Error",
+                                description: `Server responded with: ${putRes.statusText}`,
+                            })
+                        } 
+                    }
+            }
         })
+        //console.log(data)
+        // toast({
+        //     title: "Form data has been sent.",
+        //     description: `${JSON.stringify(data, null, 2)}`,
+        // })
     }
 
     return (
@@ -98,12 +164,12 @@ const ManageUserForm = ({user}: User) => {
                         </Label>
                         <FormField 
                             control={form.control} 
-                            name="Firstname"
+                            name="firstName"
                             render={({field}) => (
                                 <FormItem>
                                     <FormControl>
                                         <Input placeholder="John" 
-                                            className={`col-span-3 ${form.formState.errors.Firstname ? 'border-red-500' : ''}`}
+                                            className={`col-span-3 ${form.formState.errors.firstName ? 'border-red-500' : ''}`}
                                             {...field} />
                                     </FormControl>
                                     <FormMessage />
@@ -117,12 +183,12 @@ const ManageUserForm = ({user}: User) => {
                         </Label>
                         <FormField 
                             control={form.control} 
-                            name="Lastname"
+                            name="lastName"
                             render={({field}) => (
                                 <FormItem>
                                     <FormControl>
                                         <Input placeholder="Wick" 
-                                            className={`col-span-3 ${form.formState.errors.Lastname ? 'border-red-500' : ''}`}
+                                            className={`col-span-3 ${form.formState.errors.lastName ? 'border-red-500' : ''}`}
                                             {...field} />
                                     </FormControl>
                                     <FormMessage />
@@ -138,12 +204,12 @@ const ManageUserForm = ({user}: User) => {
                         </Label>
                         <FormField 
                             control={form.control} 
-                            name="Email"
+                            name="email"
                             render={({field}) => (
                                 <FormItem>
                                     <FormControl>
                                         <Input placeholder="example@ex.com" 
-                                            className={`col-span-3 ${form.formState.errors.Email ? 'border-red-500' : ''}`}
+                                            className={`col-span-3 ${form.formState.errors.email ? 'border-red-500' : ''}`}
                                             {...field} />
                                     </FormControl>
                                     <FormMessage />
@@ -157,7 +223,7 @@ const ManageUserForm = ({user}: User) => {
                                 </Label>
                                 <FormField 
                                     control={form.control} 
-                                    name="Role"
+                                    name="role"
                                     render={({field}) => (
                                         <FormItem>
                                             <Select 
@@ -170,7 +236,7 @@ const ManageUserForm = ({user}: User) => {
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
-                                                    <SelectItem value="Admin">Admin</SelectItem>
+                                                    <SelectItem value="Teacher">Teacher</SelectItem>
                                                     <SelectItem value="User">User</SelectItem>
                                                 </SelectContent>
                                             </Select>
@@ -187,12 +253,12 @@ const ManageUserForm = ({user}: User) => {
                         </Label>
                         <FormField 
                             control={form.control} 
-                            name="Username"
+                            name="username"
                             render={({field}) => (
                                 <FormItem>
                                     <FormControl>
                                         <Input placeholder="John_007" 
-                                            className={`col-span-3 ${form.formState.errors.Username ? 'border-red-500' : ''}`}
+                                            className={`col-span-3 ${form.formState.errors.username ? 'border-red-500' : ''}`}
                                             {...field} />
                                     </FormControl>
                                     <FormMessage />
@@ -206,12 +272,12 @@ const ManageUserForm = ({user}: User) => {
                         </Label>
                         <FormField 
                             control={form.control} 
-                            name="Password"
+                            name="password"
                             render={({field}) => (
                                 <FormItem>
                                     <FormControl>
                                         <Input placeholder="a@1xCb" 
-                                            className={`col-span-3 ${form.formState.errors.Password ? 'border-red-500' : ''}`}
+                                            className={`col-span-3 ${form.formState.errors.password ? 'border-red-500' : ''}`}
                                             {...field} />
                                     </FormControl>
                                     <FormMessage />
