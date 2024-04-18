@@ -11,7 +11,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SliderRange } from "@/components/ui/slider-range";
-import { mockData } from "@/containers/manage-page/constants/mockdata";
 import CourseCard from "@/containers/manage-page/table-section/course_card";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import {
@@ -23,19 +22,17 @@ import { useEffect, useState } from "react";
 
 export default function Browse() {
   const [courses, setCourses] = useState([]);
-  const [courseStatus, setCourseStatus] = useState(0);
   useEffect(() => {
     fetchAllCourses();
   }, []);
 
   async function fetchAllCourses() {
     const response = await fetch(
-      "/browse/api?courseId=&searchKey=&courseCat=All&teacherName="
+      "/api/browse?courseId=&searchKey=&courseCat=All&teacherName="
     );
     const data = await response.json();
     console.log(data);
     setCourses(data.data);
-    setCourseStatus(data.status);
   }
 
   return (
@@ -149,13 +146,9 @@ export default function Browse() {
             id="course-data"
             className="mt-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
           >
-            {courseStatus === 200
-              ? courses.map((item, index) => (
-                  <CourseCard variant="browse" key={index} course={item} />
-                ))
-              : mockData.map((item, index) => (
-                  <CourseCard variant="browse" key={index} course={item} />
-                ))}
+            {courses.map((item, index) => (
+              <CourseCard variant="browse" key={index} course={item} />
+            ))}
           </div>
         </div>
       </div>

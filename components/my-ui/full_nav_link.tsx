@@ -22,7 +22,7 @@ export default function FullNavLink() {
             <LogOutButton />
           </div>
         ) : (
-          <Button variant="default">Log Out</Button>
+          <LogOutButton />
         )
       ) : (
         <div className="flex items-center gap-8">

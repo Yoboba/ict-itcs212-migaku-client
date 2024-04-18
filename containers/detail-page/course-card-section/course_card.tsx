@@ -28,7 +28,7 @@ export default function CourseCard(props: CourseCardProps) {
   useEffect(() => {
     async function fetchCourse() {
       const response = await fetch(
-        `/browse/api?courseId=${props.courseId}&searchKey=&courseCat=&teacherName=`
+        `/api/browse?courseId=${props.courseId}&searchKey=&courseCat=&teacherName=`
       );
       const data = await response.json();
       console.log(data);
