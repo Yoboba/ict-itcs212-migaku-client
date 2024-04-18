@@ -23,10 +23,16 @@ const UserTable = () => {
     const [viewState, setViewState] = useState('all');
     const router = useRouter();
     const [userData, setUserData] = useState([]);
+    const [ReFetch, setReFetch] = useState(false);
+
+    const toggleRefetch = () => {
+        setReFetch((prevState) => !prevState);
+        console.log("called toggleRefetch");
+      };
 
     useEffect(() => {
         fetchCookie().then(async (cookie) => {
-            if (!cookie.userRole || !cookie.userId) {
+            if (!cookie.userRole || !cookie.userId || cookie.userRole != "Teacher") {
               router.replace("/unauthorized");
               router.refresh();
             } else {
@@ -45,7 +51,7 @@ const UserTable = () => {
                   setUserData(data);
             }
         })
-    },[])
+    },[ReFetch])
 
     function renderUserList() {
         if (viewState === 'all') {
@@ -81,11 +87,11 @@ const UserTable = () => {
                                         userId: 0,
                                         firstName: "",
                                         lastName: "",
-                                        Email: "",
+                                        email: "",
                                         username: "",
                                         password: "",
                                         role: ""
-                                    }}/>
+                                    }} method="post" onDone={toggleRefetch}/>
                             </DialogContent>
                         </Dialog>
                     </div>
@@ -113,7 +119,7 @@ const UserTable = () => {
                         </TableHeader>
                         <TableBody>
                             {renderUserList()?.map((item, index) => (
-                                <UserList key={index} user={item} />
+                                <UserList key={index} user={item} onDone={toggleRefetch} />
                             ))}
                         </TableBody>
                     </Table>

@@ -30,7 +30,7 @@ const CourseTable = () => {
 
   useEffect(() => {
     fetchCookie().then(async (cookie) => {
-      if (!cookie.userRole || !cookie.userId) {
+      if (!cookie.userRole || !cookie.userId || cookie.userRole != "Teacher") {
         router.replace("/unauthorized");
         router.refresh();
       } else {
