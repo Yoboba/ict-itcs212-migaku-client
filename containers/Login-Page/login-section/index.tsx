@@ -34,7 +34,7 @@ export default function LoginSection() {
     const data = {
       ...values,
       username: values.username,
-      password: values.password,
+      password: btoa(values.password),
     };
 
     fetch("/api/login", {

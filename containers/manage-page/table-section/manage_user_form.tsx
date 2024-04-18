@@ -73,7 +73,7 @@ const ManageUserForm = ({user, method, onDone}: UserForm) => {
             lastName: `${user? user.lastName : ''}`,
             email: `${user? user.email : ''}`,
             username: `${user? user.username : ''}`,
-            password: `${user? user.password : ''}`,
+            password: `${user? atob(user.password) : ''}`,
             role: `${user? user.role : 'User'}`
         }
     })
@@ -81,6 +81,8 @@ const ManageUserForm = ({user, method, onDone}: UserForm) => {
     const onSubmit = (values: z.infer<typeof formSchema>) => {
         const data = {
         ...values}
+
+        data.password = btoa(data.password);
         
         fetchCookie().then(async (cookie) => {
             if (!cookie.userRole || !cookie.userId || cookie.userRole != "Teacher") {
