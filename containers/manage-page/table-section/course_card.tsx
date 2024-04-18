@@ -25,6 +25,13 @@ import {
 import ManageCourseForm from "./manage_course_form";
 import CourseImage from "./course_image";
 import Link from "next/link";
+import ITImg from "@/public/courseimages/369588.jpg";
+import MAImg from "@/public/courseimages/370112.jpg";
+import SCImg from "@/public/courseimages/372560.jpg";
+import LGImg from "@/public/courseimages/373678.jpg";
+import SOImg from "@/public/courseimages/373935.jpg";
+import fetchCookie from "@/utils/fetchCookie";
+import { toast } from "@/components/ui/use-toast";
 
 type CourseProps = {
   course: {
@@ -34,13 +41,23 @@ type CourseProps = {
     courseName: string;
     courseDes: string;
     price: number;
-    status: string;
+    status: {
+      data: number[];
+      type: string;
+    };
+    rating: number;
+    courseDuration: number;
     imgSrc?: string;
   };
   variant: string;
+  onDone: () => void;
 };
 
 type CategoryMap = {
+  [key: string]: string;
+};
+
+type ImageMap = {
   [key: string]: string;
 };
 
@@ -52,7 +69,55 @@ const categoryMap: CategoryMap = {
   SO: "Social Sciences",
 };
 
-const CourseCard = ({ course, variant }: CourseProps) => {
+const imageMap: ImageMap = {
+  IT: ITImg.src,
+  MA: MAImg.src,
+  SC: SCImg.src,
+  LG: LGImg.src,
+  SO: SOImg.src,
+};
+
+const CourseCard = ({ course, variant, onDone }: CourseProps) => {
+  const axios = require("axios").default;
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [dialogState, setDialogState] = useState("");
+  async function onDeleteSubmit() {
+    const cookie = await fetchCookie();
+    axios
+      .delete("http://localhost:3001/api/course", {
+        headers: {
+          authorization: cookie.userId,
+        },
+        params: {
+          courseId: course.courseId,
+        },
+      })
+      .then(async (res) => {
+        console.log(res);
+        if (res.status !== 200) {
+          toast({
+            variant: "destructive",
+            title: "Failed to delete course.",
+            description: `Server responded with: ${res.data.Message}`,
+          });
+        } else {
+          toast({
+            title: "Course Deleted.",
+            description: `Server responded with: ${res.data.Message}`,
+          });
+          setIsProcessing(false);
+          onDone();
+        }
+      })
+      .catch((error) => {
+        toast({
+          variant: "destructive",
+          title: "Unexpected Error",
+          description: `Server responded with: ${error}`,
+        });
+        setIsProcessing(false);
+      });
+  }
   const editDialog = (
     <>
       <DialogHeader>
@@ -61,7 +126,7 @@ const CourseCard = ({ course, variant }: CourseProps) => {
           Please make changes to your course as you seem appropriate.
         </DialogDescription>
       </DialogHeader>
-      <ManageCourseForm course={course} />
+      <ManageCourseForm method="put" course={course} onDone={onDone} />
     </>
   );
   const deleteDialog = (
@@ -73,14 +138,20 @@ const CourseCard = ({ course, variant }: CourseProps) => {
           and remove your data from our servers.
         </DialogDescription>
       </DialogHeader>
-      <Button variant="destructive">Delete</Button>
+      <Button
+        variant="destructive"
+        onClick={onDeleteSubmit}
+        disabled={isProcessing}
+      >
+        Delete
+      </Button>
     </>
   );
-  const [dialogState, setDialogState] = useState("edit");
 
-  if (!course.imgSrc) {
-    course.imgSrc =
-      "https://konachan.net/sample/950f7c702854f67d021882be1af2befd/Konachan.com%20-%20374218%20sample.jpg";
+  let imgSrc = imageMap[course.courseCat];
+
+  if (course.imgSrc) {
+    imgSrc = course.imgSrc;
   }
 
   return (
@@ -91,8 +162,8 @@ const CourseCard = ({ course, variant }: CourseProps) => {
           className="relative h-[180px] w-full flex-col items-center justify-center overflow-hidden rounded-md bg-slate-200"
         >
           <div id="course-banner" className="relative size-full">
-            <div id="dimmer" className="absolute size-full bg-slate-900" />
-            <CourseImage src={course.imgSrc} />
+            <div id="dimmer" className="absolute size-full bg-slate-200" />
+            <CourseImage src={imgSrc} />
           </div>
           <div
             id="course-category"
@@ -157,14 +228,14 @@ const CourseCard = ({ course, variant }: CourseProps) => {
           </div>
         </div>
       ) : (
-        <Link href={`/browse/${course.courseId}`}>
+        <Link href={`/detail/${course.courseId}`}>
           <div
             id="CardContainer"
             className="relative h-[180px] w-full flex-col items-center justify-center overflow-hidden rounded-md bg-slate-200"
           >
             <div id="course-banner" className="relative size-full">
               <div id="dimmer" className="absolute size-full bg-slate-900" />
-              <CourseImage src={course.imgSrc} />
+              <CourseImage src={imgSrc} />
             </div>
             <div
               id="course-category"

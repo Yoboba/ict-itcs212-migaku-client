@@ -4,6 +4,11 @@ export interface BaseResponse {
   data: any;
 }
 
+export interface Cookie {
+  Role: string;
+  UserId: string;
+}
+
 export interface LoginResponse {
   Authorize: boolean;
   Role: string;
