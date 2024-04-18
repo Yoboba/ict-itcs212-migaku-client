@@ -25,7 +25,7 @@ export default function CourseDescriptionSection(
   useEffect(() => {
     async function fetchCourseDescription() {
       const response = await fetch(
-        `/browse/api?courseId=${props.courseId}&searchKey=&courseCat=&teacherName=`
+        `/api/browse?courseId=${props.courseId}&searchKey=&courseCat=&teacherName=`
       );
       const data = await response.json();
       console.log(data);

@@ -228,7 +228,7 @@ const CourseCard = ({ course, variant, onDone }: CourseProps) => {
           </div>
         </div>
       ) : (
-        <Link href={`/detail/${course.courseId}`}>
+        <Link href={`/browse/${course.courseId}`}>
           <div
             id="CardContainer"
             className="relative h-[180px] w-full flex-col items-center justify-center overflow-hidden rounded-md bg-slate-200"

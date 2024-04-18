@@ -37,7 +37,7 @@ export default function LoginSection() {
       password: values.password,
     };
 
-    fetch("/login/api", {
+    fetch("/api/login", {
       method: "POST",
       body: JSON.stringify(data),
     }).then(async (res) => {
