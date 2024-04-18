@@ -31,11 +31,14 @@ const formSchema = z.object({
   courseName: z.string().min(1, {
     message: "Course name cannot be blank.",
   }),
-  courseDes: z.optional(
-    z.string().max(500, {
+  courseDes: z
+    .string()
+    .max(500, {
       message: "Course description must not exceed 500 characters.",
     })
-  ),
+    .min(1, {
+      message: "Course Description must not be blank.",
+    }),
   courseCat: z.string(),
   price: z
     .string({
@@ -111,9 +114,6 @@ const ManageCourseForm = ({
     const data = {
       ...values,
       courseCode: values.courseCat + values.courseCode,
-      rating: parseInt(values.rating),
-      price: parseInt(values.price),
-      status: values.status === "0" ? 0 : 1,
     };
 
     setIsProcessing(true);
