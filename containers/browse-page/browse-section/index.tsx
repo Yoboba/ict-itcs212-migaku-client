@@ -42,14 +42,14 @@ export default function Browse() {
     setCourses(data.data);
   }
 
-  function renderCourse()
-  {
-    if(rate1 && rate2 && rate3 && rate4) return courses
-    else if(rate4) return courses.filter(course => course['rating'] >= 4)
-    else if(rate3) return courses.filter(course => course['rating'] >= 3)
-    else if(rate2) return courses.filter(course => course['rating'] >= 2)
-    else if(rate1) return courses.filter(course => course['rating'] >= 1)
-  }
+  // function renderCourse()
+  // {
+  //   if(rate1 && rate2 && rate3 && rate4) return courses
+  //   else if(rate4) return courses.filter(course => course['rating'] >= 4)
+  //   else if(rate3) return courses.filter(course => course['rating'] >= 3)
+  //   else if(rate2) return courses.filter(course => course['rating'] >= 2)
+  //   else if(rate1) return courses.filter(course => course['rating'] >= 1)
+  // }
 
   return (
     <div className="mx-4 mt-16 size-full flex-col gap-2 p-4 md:grid-cols-12 lg2:grid">
@@ -73,7 +73,7 @@ export default function Browse() {
           <CardContent className="mx-4 border-t-2 border-gray-200">
             <div className="text-xl font-semibold mt-4">Difficulty Rating</div>
             <div className="flex space-x-2">
-              <Checkbox className="mt-4" onClick={() => setRate4(!rate4)} defaultChecked />
+              <Checkbox className="mt-4" disabled onClick={() => setRate4(!rate4)} defaultChecked />
               <div className="mt-2 text-lg font-semibold">{"> 4"}</div>
               <div className="mt-3 flex space-x-2">
                 {Array(4).fill(
@@ -82,7 +82,7 @@ export default function Browse() {
               </div>
             </div>
             <div className="flex space-x-2">
-              <Checkbox className="mt-4" onClick={() => setRate3(!rate3)} defaultChecked />
+              <Checkbox className="mt-4" disabled onClick={() => setRate3(!rate3)} defaultChecked />
               <div className="mt-2 text-lg font-semibold">{"> 3"}</div>
               <div className="mt-3 flex space-x-2">
                 {Array(3).fill(
@@ -91,7 +91,7 @@ export default function Browse() {
               </div>
             </div>
             <div className="flex space-x-2">
-              <Checkbox className="mt-4" onClick={() => setRate2(!rate2)} defaultChecked />
+              <Checkbox className="mt-4" disabled onClick={() => setRate2(!rate2)} defaultChecked />
               <div className="mt-2 text-lg font-semibold">{"> 2"}</div>
               <div className="mt-3 flex space-x-2">
                 {Array(2).fill(
@@ -100,7 +100,7 @@ export default function Browse() {
               </div>
             </div>
             <div className="flex space-x-2">
-              <Checkbox className="mt-4" onClick={() => setRate1(!rate1)} defaultChecked />
+              <Checkbox className="mt-4" disabled onClick={() => setRate1(!rate1)} defaultChecked />
               <div className="mt-2 text-lg font-semibold">{"> 1"}</div>
               <div className="mt-3 flex space-x-2">
               <IconSkull stroke={2} />
@@ -146,7 +146,7 @@ export default function Browse() {
           id="course-results"
           className="mx-4 mt-4 h-auto flex-col rounded-md border p-4"
         >
-          <div>
+          {/* <div>
             <Select>
               <SelectTrigger className="w-full sm:w-[400px]">
                 <SelectValue placeholder="Sort By" />
@@ -157,12 +157,12 @@ export default function Browse() {
                 <SelectItem value="usr-rating">User Rating</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </div> */}
           <div
             id="course-data"
             className="mt-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
           >
-            {renderCourse()?.map((item, index) => (
+            {courses?.map((item, index) => (
               <CourseCard variant="browse" key={index} course={item} onDone={() => {}} />
             ))}
           </div>

@@ -30,7 +30,7 @@ const CourseTable = () => {
 
   useEffect(() => {
     fetchCookie().then(async (cookie) => {
-      if (!cookie.userRole || !cookie.userId || cookie.userRole != "Teacher") {
+      if (!cookie.userRole || !cookie.userId ) {
         router.replace("/unauthorized");
         router.refresh();
       } else {
@@ -65,7 +65,7 @@ const CourseTable = () => {
         >
           <div id="header-left" className="flex h-full space-x-4">
             <TableSearchBar />
-            <Button className="h-full" variant={"secondary"}>
+            <Button disabled className="h-full" variant={"secondary"}>
               <IconSortAscending2 size={20} className="" />
             </Button>
           </div>
