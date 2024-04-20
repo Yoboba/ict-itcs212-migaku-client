@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
   console.log("teacherName = " + teacherName);
 
   const response = await fetch(
-    `http://localhost:3001/api/course?courseId=${courseId}&searchKey=&courseCat=${courseCat}&teacherName=`,
+    `http://localhost:3001/api/course?courseId=${courseId}&searchKey=${searchKey}&courseCat=${courseCat}&teacherName=${teacherName}`,
     {
       method: "GET",
     }

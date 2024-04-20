@@ -68,7 +68,7 @@ export default function CourseCard(props: CourseCardProps) {
           </div>
           <div className="flex flex-col items-center  gap-2">
             <div className=" flex gap-2">
-              <p className=" text-sm text-c7 sm:text-xl">{course.rating}</p>
+              <p className=" text-sm text-c2 sm:text-xl">{course.rating}</p>
               <StarRating rating={course.rating} />
             </div>
             <h1 className=" text-xl sm:text-3xl">{course.price} THB</h1>

@@ -232,7 +232,8 @@ const ManageCourseForm = ({
               />
             </div>
             <div id="course-desc-form" className="grid w-full gap-1.5">
-              <Label htmlFor="course-desc">Course Description</Label>
+              <Label htmlFor="course-desc">Course Description <span className="text-red-500">*</span>
+              </Label>
               <FormField
                 control={form.control}
                 name="courseDes"

@@ -10,31 +10,46 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SliderRange } from "@/components/ui/slider-range";
 import CourseCard from "@/containers/manage-page/table-section/course_card";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import {
   IconFilterFilled,
   IconSearch,
-  IconSkull,
-  IconStarFilled,
+  IconSkull
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 
 export default function Browse() {
   const [courses, setCourses] = useState([]);
+  const [rate1, setRate1] = useState(true);
+  const [rate2, setRate2] = useState(true);
+  const [rate3, setRate3] = useState(true);
+  const [rate4, setRate4] = useState(true);
+  const [searchKey, setSearchKey] = useState("");
+  const [courseCat, setCourseCat] = useState("All");
+  const [teacherName, setTeacherName] = useState("");
+
   useEffect(() => {
     fetchAllCourses();
   }, []);
 
   async function fetchAllCourses() {
     const response = await fetch(
-      "/api/browse?courseId=&searchKey=&courseCat=All&teacherName="
+      `/api/browse?courseId=&searchKey=${searchKey}&courseCat=${courseCat}&teacherName=${teacherName}`
     );
     const data = await response.json();
     console.log(data);
     setCourses(data.data);
   }
+
+  // function renderCourse()
+  // {
+  //   if(rate1 && rate2 && rate3 && rate4) return courses
+  //   else if(rate4) return courses.filter(course => course['rating'] >= 4)
+  //   else if(rate3) return courses.filter(course => course['rating'] >= 3)
+  //   else if(rate2) return courses.filter(course => course['rating'] >= 2)
+  //   else if(rate1) return courses.filter(course => course['rating'] >= 1)
+  // }
 
   return (
     <div className="mx-4 mt-16 size-full flex-col gap-2 p-4 md:grid-cols-12 lg2:grid">
@@ -58,7 +73,7 @@ export default function Browse() {
           <CardContent className="mx-4 border-t-2 border-gray-200">
             <div className="text-xl font-semibold mt-4">Difficulty Rating</div>
             <div className="flex space-x-2">
-              <Checkbox className="mt-4" defaultChecked />
+              <Checkbox className="mt-4" disabled onClick={() => setRate4(!rate4)} defaultChecked />
               <div className="mt-2 text-lg font-semibold">{"> 4"}</div>
               <div className="mt-3 flex space-x-2">
                 {Array(4).fill(
@@ -67,7 +82,7 @@ export default function Browse() {
               </div>
             </div>
             <div className="flex space-x-2">
-              <Checkbox className="mt-4" defaultChecked />
+              <Checkbox className="mt-4" disabled onClick={() => setRate3(!rate3)} defaultChecked />
               <div className="mt-2 text-lg font-semibold">{"> 3"}</div>
               <div className="mt-3 flex space-x-2">
                 {Array(3).fill(
@@ -76,7 +91,7 @@ export default function Browse() {
               </div>
             </div>
             <div className="flex space-x-2">
-              <Checkbox className="mt-4" defaultChecked />
+              <Checkbox className="mt-4" disabled onClick={() => setRate2(!rate2)} defaultChecked />
               <div className="mt-2 text-lg font-semibold">{"> 2"}</div>
               <div className="mt-3 flex space-x-2">
                 {Array(2).fill(
@@ -85,7 +100,7 @@ export default function Browse() {
               </div>
             </div>
             <div className="flex space-x-2">
-              <Checkbox className="mt-4" defaultChecked />
+              <Checkbox className="mt-4" disabled onClick={() => setRate1(!rate1)} defaultChecked />
               <div className="mt-2 text-lg font-semibold">{"> 1"}</div>
               <div className="mt-3 flex space-x-2">
               <IconSkull stroke={2} />
@@ -97,10 +112,10 @@ export default function Browse() {
       <div id="browsing" className="lg2:col-span-9">
         <div className="mx-4 mt-4 grid grid-cols-12 gap-4">
           <div className="col-span-10">
-            <Input placeholder="Search" />
+            <Input placeholder="Search" onInput={(e) => setSearchKey(e.currentTarget.value)}/>
           </div>
           <div className="col-span-2">
-            <Button className="w-full bg-[#ff7a7a] hover:bg-red-500">
+            <Button className="w-full bg-[#ff7a7a] hover:bg-red-500" onClick={() => fetchAllCourses()}>
               <IconSearch size={20} className="font-bold text-white" />
             </Button>
           </div>
@@ -108,12 +123,12 @@ export default function Browse() {
         <div className="mx-4 mt-4 grid grid-cols-12 gap-4">
           <div className="col-span-6">
             <Label className="mb-2">Course Category:</Label>
-            <Select defaultValue="ALL">
+            <Select defaultValue="All" onValueChange={(e) => setCourseCat(e)}>
               <SelectTrigger className="mt-0 w-full">
                 <SelectValue placeholder="Course Category" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="ALL">All</SelectItem>
+                <SelectItem value="All">All</SelectItem>
                 <SelectItem value="IT">Information Technology</SelectItem>
                 <SelectItem value="MA">Mathematics</SelectItem>
                 <SelectItem value="SC">Science</SelectItem>
@@ -124,14 +139,14 @@ export default function Browse() {
           </div>
           <div className="col-span-6">
             <Label className="mb-2">Instructor Name:</Label>
-            <Input placeholder="ex. Albus Dumbledore"></Input>
+            <Input placeholder="ex. Albus Dumbledore" onInput={(e) => setTeacherName(e.currentTarget.value)}></Input>
           </div>
         </div>
         <div
           id="course-results"
           className="mx-4 mt-4 h-auto flex-col rounded-md border p-4"
         >
-          <div>
+          {/* <div>
             <Select>
               <SelectTrigger className="w-full sm:w-[400px]">
                 <SelectValue placeholder="Sort By" />
@@ -142,13 +157,13 @@ export default function Browse() {
                 <SelectItem value="usr-rating">User Rating</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </div> */}
           <div
             id="course-data"
             className="mt-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
           >
-            {courses.map((item, index) => (
-              <CourseCard variant="browse" key={index} course={item} />
+            {courses.filter(c => c['status']['data'][0] == 1)?.map((item, index) => (
+              <CourseCard variant="browse" key={index} course={item} onDone={() => {}} />
             ))}
           </div>
         </div>
