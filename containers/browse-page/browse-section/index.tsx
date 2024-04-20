@@ -162,7 +162,7 @@ export default function Browse() {
             id="course-data"
             className="mt-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
           >
-            {courses?.map((item, index) => (
+            {courses.filter(c => c['status']['data'][0] == 1)?.map((item, index) => (
               <CourseCard variant="browse" key={index} course={item} onDone={() => {}} />
             ))}
           </div>
