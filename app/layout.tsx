@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import { lexend } from "@/lib/font";
 import { cn } from "@/lib/utils";
 import NavBar from "@/components/my-ui/navbar";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
+import Footer from "@/components/my-ui/footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,9 +25,10 @@ export default function RootLayout({
           lexend.variable
         )}
       >
-        <Toaster/>
-        <NavBar/>
+        <Toaster />
+        <NavBar />
         {children}
+        <Footer />
       </body>
     </html>
   );
