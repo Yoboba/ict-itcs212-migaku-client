@@ -17,11 +17,11 @@ export function middleware(request: NextRequest) {
     if (cookieUserId && cookieUserRole) {
       if (cookieUserRole.value !== "Teacher") {
         console.log("role rejected, can't enter manage page");
-        return NextResponse.rewrite(new URL("/", request.url));
+        return NextResponse.rewrite(new URL("/unauthorized", request.url));
       }
       return NextResponse.next();
     }
     console.log("cookie missing, can't access manage page");
-    return NextResponse.rewrite(new URL("/", request.url));
+    return NextResponse.rewrite(new URL("/unauthorized", request.url));
   }
 }
