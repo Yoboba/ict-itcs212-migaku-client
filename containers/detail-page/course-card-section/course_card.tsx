@@ -11,7 +11,7 @@ interface CourseCardProps {
   courseId: number;
 }
 
-export default function CourseCard(props: CourseCardProps) {
+export default function CourseCard(props: Readonly<CourseCardProps>) {
   const [course, setCourse] = useState({
     courseId: 0,
     courseCode: "",
@@ -25,16 +25,16 @@ export default function CourseCard(props: CourseCardProps) {
     status: 0,
   });
 
+  async function fetchCourse() {
+    const response = await fetch(
+      `/api/course?courseId=${props.courseId}&searchKey=&courseCat=&teacherName=`
+    );
+    const data = await response.json();
+    console.log(data);
+    setCourse(data.data[0]);
+  }
+
   useEffect(() => {
-    async function fetchCourse() {
-      const response = await fetch(
-        `/api/browse?courseId=${props.courseId}&searchKey=&courseCat=&teacherName=`
-      );
-      const data = await response.json();
-      console.log(data);
-      setCourse(data.data[0]);
-    }
-    // use function
     fetchCourse();
   }, []);
 

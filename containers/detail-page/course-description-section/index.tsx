@@ -7,7 +7,7 @@ interface CourseDescriptionProps {
   courseId: number;
 }
 export default function CourseDescriptionSection(
-  props: CourseDescriptionProps
+  props: Readonly<CourseDescriptionProps>
 ) {
   const [course, setCourse] = useState({
     courseId: 0,
@@ -22,16 +22,16 @@ export default function CourseDescriptionSection(
     status: 0,
   });
 
+  async function fetchCourseDescription() {
+    const response = await fetch(
+      `/api/course?courseId=${props.courseId}&searchKey=&courseCat=&teacherName=`
+    );
+    const data = await response.json();
+    console.log(data);
+    setCourse(data.data[0]);
+  }
+
   useEffect(() => {
-    async function fetchCourseDescription() {
-      const response = await fetch(
-        `/api/browse?courseId=${props.courseId}&searchKey=&courseCat=&teacherName=`
-      );
-      const data = await response.json();
-      console.log(data);
-      setCourse(data.data[0]);
-    }
-    // use function
     fetchCourseDescription();
   }, []);
 
