@@ -12,11 +12,7 @@ import {
 } from "@/components/ui/select";
 import CourseCard from "@/containers/manage-page/table-section/course_card";
 import { Label } from "@radix-ui/react-dropdown-menu";
-import {
-  IconFilterFilled,
-  IconSearch,
-  IconSkull
-} from "@tabler/icons-react";
+import { IconFilterFilled, IconSearch, IconSkull } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 
 export default function Browse() {
@@ -29,27 +25,18 @@ export default function Browse() {
   const [courseCat, setCourseCat] = useState("All");
   const [teacherName, setTeacherName] = useState("");
 
-  useEffect(() => {
-    fetchAllCourses();
-  }, []);
-
   async function fetchAllCourses() {
     const response = await fetch(
-      `/api/browse?courseId=&searchKey=${searchKey}&courseCat=${courseCat}&teacherName=${teacherName}`
+      `/api/course?courseId=&searchKey=${searchKey}&courseCat=${courseCat}&teacherName=${teacherName}`
     );
     const data = await response.json();
     console.log(data);
     setCourses(data.data);
   }
 
-  // function renderCourse()
-  // {
-  //   if(rate1 && rate2 && rate3 && rate4) return courses
-  //   else if(rate4) return courses.filter(course => course['rating'] >= 4)
-  //   else if(rate3) return courses.filter(course => course['rating'] >= 3)
-  //   else if(rate2) return courses.filter(course => course['rating'] >= 2)
-  //   else if(rate1) return courses.filter(course => course['rating'] >= 1)
-  // }
+  useEffect(() => {
+    fetchAllCourses();
+  }, []);
 
   return (
     <div className="mx-4 mt-16 size-full flex-col gap-2 p-4 md:grid-cols-12 lg2:grid">
@@ -61,49 +48,54 @@ export default function Browse() {
               <IconFilterFilled size={25} className="ml-2 mt-1 text-black" />
             </CardTitle>
           </CardHeader>
-          {/* <CardContent className="mx-4 border-b-2 border-gray-200">
-            <div className="text-xl font-semibold">Price Range</div>
-            <SliderRange
-              className="mt-4"
-              defaultValue={[1000, 9000]}
-              min={0}
-              max={10000}
-            />
-          </CardContent> */}
           <CardContent className="mx-4 border-t-2 border-gray-200">
-            <div className="text-xl font-semibold mt-4">Difficulty Rating</div>
+            <div className="mt-4 text-xl font-semibold">Difficulty Rating</div>
             <div className="flex space-x-2">
-              <Checkbox className="mt-4" disabled onClick={() => setRate4(!rate4)} defaultChecked />
+              <Checkbox
+                className="mt-4"
+                disabled
+                onClick={() => setRate4(!rate4)}
+                defaultChecked
+              />
               <div className="mt-2 text-lg font-semibold">{"> 4"}</div>
               <div className="mt-3 flex space-x-2">
-                {Array(4).fill(
-                  <IconSkull stroke={2} />
-                )}
+                {Array(4).fill(<IconSkull stroke={2} />)}
               </div>
             </div>
             <div className="flex space-x-2">
-              <Checkbox className="mt-4" disabled onClick={() => setRate3(!rate3)} defaultChecked />
+              <Checkbox
+                className="mt-4"
+                disabled
+                onClick={() => setRate3(!rate3)}
+                defaultChecked
+              />
               <div className="mt-2 text-lg font-semibold">{"> 3"}</div>
               <div className="mt-3 flex space-x-2">
-                {Array(3).fill(
-                  <IconSkull stroke={2} />
-                )}
+                {Array(3).fill(<IconSkull stroke={2} />)}
               </div>
             </div>
             <div className="flex space-x-2">
-              <Checkbox className="mt-4" disabled onClick={() => setRate2(!rate2)} defaultChecked />
+              <Checkbox
+                className="mt-4"
+                disabled
+                onClick={() => setRate2(!rate2)}
+                defaultChecked
+              />
               <div className="mt-2 text-lg font-semibold">{"> 2"}</div>
               <div className="mt-3 flex space-x-2">
-                {Array(2).fill(
-                  <IconSkull stroke={2} />
-                )}
+                {Array(2).fill(<IconSkull stroke={2} />)}
               </div>
             </div>
             <div className="flex space-x-2">
-              <Checkbox className="mt-4" disabled onClick={() => setRate1(!rate1)} defaultChecked />
+              <Checkbox
+                className="mt-4"
+                disabled
+                onClick={() => setRate1(!rate1)}
+                defaultChecked
+              />
               <div className="mt-2 text-lg font-semibold">{"> 1"}</div>
               <div className="mt-3 flex space-x-2">
-              <IconSkull stroke={2} />
+                <IconSkull stroke={2} />
               </div>
             </div>
           </CardContent>
@@ -112,10 +104,16 @@ export default function Browse() {
       <div id="browsing" className="lg2:col-span-9">
         <div className="mx-4 mt-4 grid grid-cols-12 gap-4">
           <div className="col-span-10">
-            <Input placeholder="Search" onInput={(e) => setSearchKey(e.currentTarget.value)}/>
+            <Input
+              placeholder="Search"
+              onInput={(e) => setSearchKey(e.currentTarget.value)}
+            />
           </div>
           <div className="col-span-2">
-            <Button className="w-full bg-[#ff7a7a] hover:bg-red-500" onClick={() => fetchAllCourses()}>
+            <Button
+              className="w-full bg-[#ff7a7a] hover:bg-red-500"
+              onClick={() => fetchAllCourses()}
+            >
               <IconSearch size={20} className="font-bold text-white" />
             </Button>
           </div>
@@ -139,32 +137,30 @@ export default function Browse() {
           </div>
           <div className="col-span-6">
             <Label className="mb-2">Instructor Name:</Label>
-            <Input placeholder="ex. Albus Dumbledore" onInput={(e) => setTeacherName(e.currentTarget.value)}></Input>
+            <Input
+              placeholder="ex. Albus Dumbledore"
+              onInput={(e) => setTeacherName(e.currentTarget.value)}
+            ></Input>
           </div>
         </div>
         <div
           id="course-results"
           className="mx-4 mt-4 h-auto flex-col rounded-md border p-4"
         >
-          {/* <div>
-            <Select>
-              <SelectTrigger className="w-full sm:w-[400px]">
-                <SelectValue placeholder="Sort By" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="cs-name">Course Name</SelectItem>
-                <SelectItem value="cs-cat">Course Category</SelectItem>
-                <SelectItem value="usr-rating">User Rating</SelectItem>
-              </SelectContent>
-            </Select>
-          </div> */}
           <div
             id="course-data"
             className="mt-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
           >
-            {courses.filter(c => c['status']['data'][0] == 1)?.map((item, index) => (
-              <CourseCard variant="browse" key={index} course={item} onDone={() => {}} />
-            ))}
+            {courses
+              .filter((c: any) => c.status.data[0] === 1)
+              ?.map((item, index) => (
+                <CourseCard
+                  variant="browse"
+                  key={index}
+                  course={item}
+                  onDone={() => {}}
+                />
+              ))}
           </div>
         </div>
       </div>
