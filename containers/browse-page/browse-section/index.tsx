@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 
 export default function Browse() {
   const [courses, setCourses] = useState([]);
+  const [courseStatus, setCourseStatus] = useState(0);
   const [rate1, setRate1] = useState(true);
   const [rate2, setRate2] = useState(true);
   const [rate3, setRate3] = useState(true);
@@ -32,6 +33,7 @@ export default function Browse() {
     const data = await response.json();
     console.log(data);
     setCourses(data.data);
+    setCourseStatus(data.status);
   }
 
   useEffect(() => {
@@ -151,16 +153,20 @@ export default function Browse() {
             id="course-data"
             className="mt-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
           >
-            {courses
-              .filter((c: any) => c.status.data[0] === 1)
-              ?.map((item, index) => (
-                <CourseCard
-                  variant="browse"
-                  key={index}
-                  course={item}
-                  onDone={() => {}}
-                />
-              ))}
+            {courseStatus !== 200 ? (
+              <div>No Courses Found...</div>
+            ) : (
+              courses
+                .filter((c: any) => c.status.data[0] === 1)
+                ?.map((item, index) => (
+                  <CourseCard
+                    variant="browse"
+                    key={index}
+                    course={item}
+                    onDone={() => {}}
+                  />
+                ))
+            )}
           </div>
         </div>
       </div>
