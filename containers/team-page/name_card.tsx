@@ -17,8 +17,7 @@ export default function NameCard({ user }: NameCardProps) {
         alt={"Profile Image"}
         height={350}
         width={400}
-        className=" h-[200px] w-[400px] sm:h-[200px] w-[400px] "
-        object-contain
+        className=" h-[250px] w-[400px] sm:h-[250px] w-[400px] object-cover"
       />
       <div className="flex flex-col m-5 gap-y-1">
         <p className="text-xl">{user.Name || "-"} </p>

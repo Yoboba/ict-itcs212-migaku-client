@@ -9,7 +9,7 @@ export const mockUser = [
     Name: "Phoonawit Lerchanaruangrit",
     Role: "Full-stack developer",
     Intro: "We are doing our best to bring out the best services.",
-    ImgSrc: "",
+    ImgSrc: "/images/Boom.png",
   },
   {
     Name: "Nantapat Wattanasuttiwong",
