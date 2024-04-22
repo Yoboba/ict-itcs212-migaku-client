@@ -1,33 +1,32 @@
 export const mockUser = [
-    {
-        Name: "Nantapat Wattanasuttiwong",
-        Role: "Software Engineer",
-        Intro: "Lorem IPIPIP",
-        ImgSrc: "/images/pass.jpg"
-    },
-    {
-        Name: "Sanhanut Kungwolnan",
-        Role: "Software Engineer",
-        Intro: "Lorem IPIPIP",
-        ImgSrc: "/images/pass.jpg"
-    },
-    {
-        Name: "",
-        Role: "",
-        Intro: "",
-        ImgSrc: ""
-    },
-    {
-        Name: "Abe Ebe",
-        Role: "Software Engineer",
-        Intro: "Lorem Ipsum",
-        ImgSrc: ""
-    },
-    {
-        Name: "Abe Ebe",
-        Role: "Software Engineer",
-        Intro: "Lorem IPIPIP",
-        ImgSrc: ""
-    }
+  {
+    Name: "Sanhanut Kungwolnan",
+    Role: "CEO",
+    Intro: "We are doing our best to bring out the best services.",
+    ImgSrc: "/images/Prom.jpg",
+  },
+  {
+    Name: "Phoonawit Lerchanaruangrit",
+    Role: "Full-stack developer",
+    Intro: "We are doing our best to bring out the best services.",
+    ImgSrc: "",
+  },
+  {
+    Name: "Nantapat Wattanasuttiwong",
+    Role: "Front-end dev",
+    Intro: "We are doing our best to bring out the best services.",
+    ImgSrc: "/images/G.png",
+  },
+  {
+    Name: "Thanachot Onlamoon",
+    Role: "Full-stack developer",
+    Intro: "We are doing our best to bring out the best services.",
+    ImgSrc: "/images/B.jpg",
+  },
+  {
+    Name: "Rachapon Khumsap",
+    Role: "Front-end developer",
+    Intro: "We are doing our best to bring out the best services.",
+    ImgSrc: "/images/Kendo.png",
+  },
 ];
-
