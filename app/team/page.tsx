@@ -5,8 +5,6 @@ export default function TeamPage() {
     <div className="py-10">
       <div className="mb-10">
         <Banner />
-      </div>
-      <div>
         <Index />
       </div>
     </div>

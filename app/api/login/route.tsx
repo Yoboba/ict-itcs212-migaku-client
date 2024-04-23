@@ -2,6 +2,7 @@ import { BaseResponse, LoginResponse } from "@/utils/response";
 import { NextRequest, NextResponse } from "next/server";
 import { createCookie, deleteCookie, getCookie } from "@/utils/cookie";
 
+// server authentication
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const responseJson: BaseResponse = {

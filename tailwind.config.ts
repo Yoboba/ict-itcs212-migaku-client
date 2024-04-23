@@ -1,14 +1,14 @@
-import type { Config } from "tailwindcss"
-import { fontFamily } from "tailwindcss/defaultTheme"
+import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './containers/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './hooks/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-	],
+    "./containers/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./hooks/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -19,30 +19,29 @@ const config = {
       },
     },
     screens: {
-      'sm': '640px',
-      'md': '768px',
-      'nowrap': '840px',
-      'lg': '1024px',
-      'lg2': '1086px',
-      'xl': '1280px',
-      '2xl': '1536px',
+      sm: "640px",
+      md: "768px",
+      nowrap: "840px",
+      lg: "1024px",
+      lg2: "1086px",
+      xl: "1280px",
+      "2xl": "1536px",
     },
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
       colors: {
-        // TODO : Init custom colors here
-        c0 : "#727272",
-        c1 : "#FEA800",
-        c2 : "#FF3031",
-        c3 : "#EEB340",
-        c4 : "#FF797A",
-        c5 : "#FF797A",
-        c6 : "#FFAD81",
-        c7 : "#F6C50C",
-        c8 : "#D5B4FF",
-        c9 : "#FFBC58",
+        c0: "#727272",
+        c1: "#FEA800",
+        c2: "#FF3031",
+        c3: "#EEB340",
+        c4: "#FF797A",
+        c5: "#FF797A",
+        c6: "#FFAD81",
+        c7: "#F6C50C",
+        c8: "#D5B4FF",
+        c9: "#FFBC58",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -99,6 +98,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;
