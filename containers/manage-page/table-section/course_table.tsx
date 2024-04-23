@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/dialog";
 import ManageCourseForm from "./manage_course_form";
 import { useState, useEffect } from "react";
-import CourseCardSkeleton from "./course_card_skeleton";
 import { useRouter } from "next/navigation";
 import fetchCookie from "@/utils/fetchCookie";
 
@@ -21,7 +20,6 @@ const CourseTable = () => {
   const axios = require("axios").default;
   const router = useRouter();
   const [courseData, setCourseData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [shouldRefetch, setShouldRefetch] = useState(false);
   const toggleRefetch = () => {
     setShouldRefetch((prevState) => !prevState);
@@ -30,7 +28,7 @@ const CourseTable = () => {
 
   useEffect(() => {
     fetchCookie().then(async (cookie) => {
-      if (!cookie.userRole || !cookie.userId ) {
+      if (!cookie.userRole || !cookie.userId) {
         router.replace("/unauthorized");
         router.refresh();
       } else {
@@ -50,9 +48,6 @@ const CourseTable = () => {
           }
         );
         setCourseData(courseResponse.data);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 500);
       }
     });
   }, [shouldRefetch]);
@@ -93,18 +88,14 @@ const CourseTable = () => {
           id="course-data"
           className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
         >
-          {!isLoading
-            ? courseData.map((item, index: number) => (
-                <CourseCard
-                  variant="manage"
-                  key={index}
-                  course={item}
-                  onDone={toggleRefetch}
-                />
-              ))
-            : Array.from({ length: 7 }, (_, index) => (
-                <CourseCardSkeleton key={index} />
-              ))}
+          {courseData.map((item, index: number) => (
+            <CourseCard
+              variant="manage"
+              key={index}
+              course={item}
+              onDone={toggleRefetch}
+            />
+          ))}
         </div>
       </div>
     </div>

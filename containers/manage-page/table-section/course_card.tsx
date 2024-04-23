@@ -92,7 +92,7 @@ const CourseCard = ({ course, variant, onDone }: CourseProps) => {
           courseId: course.courseId,
         },
       })
-      .then(async (res:any) => {
+      .then(async (res: any) => {
         console.log(res);
         if (res.status !== 200) {
           toast({
@@ -109,7 +109,7 @@ const CourseCard = ({ course, variant, onDone }: CourseProps) => {
           onDone();
         }
       })
-      .catch((error:any) => {
+      .catch((error: any) => {
         toast({
           variant: "destructive",
           title: "Unexpected Error",

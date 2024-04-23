@@ -50,8 +50,8 @@ export default function LoginSection() {
         });
       } else {
         toast({
-          title: "Logged in Successfully",
-          description: `对了！！！！`,
+          title: "Log in Successfully",
+          description: `Thanks for visiting our website!`,
         });
         router.replace("/");
         router.refresh();

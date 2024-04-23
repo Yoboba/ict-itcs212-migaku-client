@@ -2,6 +2,7 @@ import { BaseResponse } from "@/utils/response";
 import console from "console";
 import { NextResponse, NextRequest } from "next/server";
 
+// fetch courses from the server
 export async function GET(request: NextRequest) {
   const responseJson: BaseResponse = {
     status: 0,

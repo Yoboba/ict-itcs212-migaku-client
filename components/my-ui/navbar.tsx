@@ -20,7 +20,6 @@ export default function NavBar() {
         </Link>
         <SearchBar />
       </div>
-      {/* if screen width < 640px then display MobileNavLink */}
       <FullNavLink />
       <MobileNavLink />
     </nav>
