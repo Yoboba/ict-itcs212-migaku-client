@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
 
-export function createCookie(cookieName: string, userId: string) {
+export function createCookie(cookieName: string, value: string) {
   const now = new Date();
   const expirationTime = new Date(now.getTime() + 15 * 60 * 1000); // <- 15 min from now
   cookies().set({
     name: cookieName,
-    value: userId,
+    value,
     httpOnly: true,
     expires: expirationTime,
   });
