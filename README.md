@@ -1,8 +1,7 @@
 # Migaku Learning Platform 📖
 
-<p>This project submitted in partial fulfillment of
-the requirements for ITCS212 Web Programming, Faculty of Information Communication and Techonology,  Mahidol University
-</p>
+This project submitted in partial fulfillment of
+the requirements for ITCS212 Web Programming, Faculty of Information Communication and Techonology, Mahidol University
 
 ### Project/Repository Description
 
@@ -73,10 +72,22 @@ git clone https://github.com/S4NHXNU1/ict-itcs212-migaku-server.git
 npm install
 ```
 
-1. run both client and server side repository
+1. run both client and server side repository, **client port : 3000**, **server port : 3001**
 
 ```bash
 npm run dev
 ```
 
-_you may need to use wifi that isn't MU-WIFI or any secure wifi because they may block our database connection since it is hosted on one of our team server_
+#### Admin and User testing account
+
+- **Teacher**
+  username : dummyUser2
+  password : Password
+- **Student**
+  username : Yobubble
+  password : 123@@#awdawd
+
+##### note that
+
+- _you may need to use wifi that isn't MU-WIFI or any secure wifi because they may block our database connection since it is hosted on one of our team server_
+- _the database server might be down everytime so if something don't go as expected it is due to our database_
