@@ -90,4 +90,13 @@ npm run dev
 ##### note that
 
 - _you may need to use wifi that isn't MU-WIFI or any secure wifi because they may block our database connection since it is hosted on one of our team server_
-- _the database server might be down everytime so if something don't go as expected it is due to our database_
+- _the database server might be down everytime so if something don't go as expected it is due to our database isn't so consistent_
+
+## Page preview
+
+![Home Page](./public/pages/home.png)
+![Login Page](./public/pages/login.png)
+![Courses Page](./public/pages/courses_browse.png)
+![About us Page](./public/pages/about_us.png)
+![Manage Course Page](./public/pages/course_manage.png)
+![Manage User Page](./public/pages/user_manage.png)s
