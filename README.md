@@ -99,4 +99,4 @@ npm run dev
 ![Courses Page](./public/pages/courses_browse.png)
 ![About us Page](./public/pages/about_us.png)
 ![Manage Course Page](./public/pages/course_manage.png)
-![Manage User Page](./public/pages/user_manage.png)s
+![Manage User Page](./public/pages/user_manage.png)
